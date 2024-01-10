@@ -1,0 +1,45 @@
+MODEL:
+! Acceptance sampling design.  From a large lot,take a sample of size N, accept if C or less are
+  defective;
+! Poisson approximation to number defective is used;
+
+SETS:
+x /1..2/;
+y /1..4/;
+vx(x,y):Vec;
+ENDSETS
+
+DATA:
+  AQL  = @POINTER( 1);    ! "Good" lot fraction defective;
+  LTFD = @POINTER( 2);    ! "Bad"  lot fraction defective;
+  PRDRISK = @POINTER( 3); ! Tolerance for rejecting good lot;
+  CONRISK = @POINTER( 4); ! Tolerance for accepting bad lot;
+  MINSMP = @POINTER( 5);  ! Lower and upper bounds on sample size;
+  MAXSMP = @POINTER( 6);
+  Vec = @POINTER( 7);
+ENDDATA
+
+CALC:
+  @TEXT() = '  The BANDWIDTH:';
+  @TABLE(Vec);
+ENDCALC
+
+  [OBJ] MIN = N;
+! Tolerance for rejecting a good lot
+  (@PPOISCDF = Cumulative Poisson Dist);
+  1 - @PPOISCDF( N * AQL, C) <= PRDRISK;
+! Tolerance for accepting a bad lot;
+  @PPOISCDF( N * LTFD, C) <= CONRISK;
+! Give solver some help in getting into range;
+  @BND( MINSMP, N, MAXSMP); 
+  @BND( 1, C, MAXSMP);
+! Make variables general integer;
+  @GIN( N);  @GIN( C);
+
+DATA:
+ @POINTER( 8) = N;
+ @POINTER( 9) = C;
+ @POINTER( 10) = @STATUS();
+ENDDATA
+
+END

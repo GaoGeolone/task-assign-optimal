@@ -1,0 +1,139 @@
+  LINGO/LNX64 19.0.0.40 (26 Apr 2021)
+ 
+  LINDO API 13.0.4099.270 (Apr 26 2021 15:25:08)
+ 
+  Copyright (C) 2011-2020 LINDO Systems Inc. Licensed material,
+  all rights reserved. Copying except as authorized in license
+  agreement is prohibited.
+ 
+  License location: /home/gjl/lingo19/license/linux64/lndlng19.lic
+  Config  location: /home/gjl/lingo19/LINGO.CNF
+ 
+  gaojialong@nudt.edu.cn
+ 
+  License expires: 30 Apr 2024
+ 
+  Licensed for educational use only.
+  Branch-and-bound solver enabled.
+  Nonlinear solver enabled.
+  Barrier solver enabled.
+  Global solver enabled.
+  Integer solver enabled.
+  Stochastic solver enabled.
+  Conic solver enabled.
+ 
+: SET ECHOIN 1
+ 
+   Parameter        Old Value     New Value
+    ECHOIN             1             1
+ 
+:  TAKE samsizr.lng
+: MODEL:
+? ! Acceptance sampling design.  From a large lot,take a sample of size N, accept if
+?   defective;
+? ! Poisson approximation to number defective is used;
+? SETS:
+? x /1..2/;
+? y /1..4/;
+? vx(x,y):Vec;
+? ENDSETS
+? DATA:
+?   AQL  = @POINTER( 1);    ! "Good" lot fraction defective;
+?   LTFD = @POINTER( 2);    ! "Bad"  lot fraction defective;
+?   PRDRISK = @POINTER( 3); ! Tolerance for rejecting good lot;
+?   CONRISK = @POINTER( 4); ! Tolerance for accepting bad lot;
+?   MINSMP = @POINTER( 5);  ! Lower and upper bounds on sample size;
+?   MAXSMP = @POINTER( 6);
+?   Vec = @POINTER( 7);
+? ENDDATA
+? CALC:
+?   @TEXT() = '  The BANDWIDTH:';
+?   @TABLE(Vec);
+? ENDCALC
+?   [OBJ] MIN = N;
+? ! Tolerance for rejecting a good lot
+?   (@PPOISCDF = Cumulative Poisson Dist);
+?   1 - @PPOISCDF( N * AQL, C) <= PRDRISK;
+? ! Tolerance for accepting a bad lot;
+?   @PPOISCDF( N * LTFD, C) <= CONRISK;
+? ! Give solver some help in getting into range;
+?   @BND( MINSMP, N, MAXSMP);
+?   @BND( 1, C, MAXSMP);
+? ! Make variables general integer;
+?   @GIN( N);  @GIN( C);
+? DATA:
+?  @POINTER( 8) = N;
+?  @POINTER( 9) = C;
+?  @POINTER( 10) = @STATUS();
+? ENDDATA
+? END
+:  GO
+  Compiling model ...
+   The BANDWIDTH:
+             1         2         3         4
+   1  1.000000  2.000000  3.000000  4.000000
+   2  5.000000  6.000000  7.000000  8.000000
+  Structural analysis, pass 1 ...
+  Scalarizing model ...
+  Generating nonzero matrix ...
+  Solving ...
+ 
+      Iters   Steps  Active     Status     Objective         Bound
+          1       1       0    UNKNOWN    -0.100+308    -0.100E+31
+        108       5       0  LOCAL_OPT      197.          197.
+ 
+  Running dual solver...
+ 
+  LINGO/LNX64 19.0.40 (26 Apr 2021), LINDO API 13.0.4099.270
+ 
+  Licensee info: gaojialong@nudt.edu.cn
+  License expires: 30 APR 2024
+ 
+  Local optimal solution found.
+  Objective value:                              197.0000
+  Objective bound:                              197.0000
+  Infeasibilities:                              0.000000
+  Extended solver steps:                               4
+  Total solver iterations:                           108
+  Elapsed runtime seconds:                          0.24
+ 
+  Running output operations ...
+ 
+  Model Class:                                     PINLP
+ 
+  Total variables:                      2
+  Nonlinear variables:                  2
+  Integer variables:                    2
+ 
+  Total constraints:                    3
+  Nonlinear constraints:                2
+ 
+  Total nonzeros:                       5
+  Nonlinear nonzeros:                   4
+ 
+ 
+ 
+                                Variable           Value        Reduced Cost
+                                     AQL       0.3000000E-01        0.000000
+                                    LTFD       0.8000000E-01        0.000000
+                                 PRDRISK       0.9000000E-01        0.000000
+                                 CONRISK       0.5000000E-01        0.000000
+                                  MINSMP        125.0000            0.000000
+                                  MAXSMP        400.0000            0.000000
+                                       N        197.0000            1.000000
+                                       C        9.000000            0.000000
+                              VEC( 1, 1)        1.000000            0.000000
+                              VEC( 1, 2)        2.000000            0.000000
+                              VEC( 1, 3)        3.000000            0.000000
+                              VEC( 1, 4)        4.000000            0.000000
+                              VEC( 2, 1)        5.000000            0.000000
+                              VEC( 2, 2)        6.000000            0.000000
+                              VEC( 2, 3)        7.000000            0.000000
+                              VEC( 2, 4)        8.000000            0.000000
+ 
+                                     Row    Slack or Surplus      Dual Price
+                                     OBJ        197.0000           -1.000000
+                                       2       0.1213208E-01        0.000000
+                                       3       0.1310741E-02        0.000000
+ 
+:  QUIT
