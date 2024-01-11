@@ -72,7 +72,7 @@ ENDCALC
     @SUM(cuxcu(i,j):
         TENSOR(k,i,j)*@SUM(fxf(fi,fj):Xp(i,fi)*FREQUENCY(fi)*FLUXFORFUNCPAIR(fi,fj)*Xp(j,fj)))/BANDWIDTH(k))  ;  !update workload of each Transport node;
 ! Worklad of each Compute Unit >= 0;
-@FOR(cuv(cui):MaxRatio >=@SUM(fv(lfj):Xp(cui,lfj)*WORKLOAD(lfj,lfj))/SPEED(cui));
+! Not adopted;
 !@FOR(cuv(cui):MaxRatio >=
     @SUM(fv(lfj):Xp(cui,lfj)*WORKLOAD(lfj,lfj))/SPEED(cui));
 ! The delay of each pair of functions should be less than the constraint;
