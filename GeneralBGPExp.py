@@ -226,8 +226,8 @@ def CBGProblem(TestCounter,Ncu,Nlk,Nf,Nprop,tensor,fluxfpair,Frequency,workloadf
     errorcode = lingo.pyLSdeleteEnvLng(pEnv)
     if errorcode != const.LSERR_NO_ERROR_LNG:
         exit(1)
-
-    Obj = CalcloadOfCUandLK(TestCounter,Ncu,Nlk,Nf,Nprop,tensor,fluxfpair,workloadf,bandwidth,speed,delay,delayconstraint,Xp)
+    fluxfpairOmega = np.dot(np.diag(Frequency),fluxfpair)
+    Obj = CalcloadOfCUandLK(TestCounter,Ncu,Nlk,Nf,Nprop,tensor,fluxfpairOmega,workloadf,bandwidth,speed,delay,delayconstraint,Xp)
     # IF Obj > Ratio ,must be the case Only Cu or OnlyLk
     print(f'Real load Result: [{Obj}]')
     return [Obj, Xp, SolutionQuality]
@@ -297,7 +297,7 @@ def IteratorOfOptimal(count, shape, tensor, parametre, Xp, FedCoAssign):
     ES = np.block([[np.kron(C00a,np.eye(N[0])),np.kron(C00b,np.ones((N[0],N[0]))),np.kron(C01,np.ones((N[0],N[1])))],
                     [np.kron(C10,np.ones((N[1],N[0]))),np.kron(C11a,np.eye(N[1])),np.kron(C11b,np.ones((N[1],N[1])))]])
     # Data Size of Entities's state
-    DxC = np.diag([5,15,10,15,15,10])
+    DxC = np.diag([5,30,10,15,15,10])
     Dx = DefinedKroneckerProduct(DxC,N)
     # Define function frequencies N0,N1,omegaf0,omegag0,omegaf1,omegag1,omegal0,Type = 10,1,15,20,2,15parametre
     BasicFreq = np.array([omegaf0,omegag0,omegal0,omegaf1,omegag1,omegal0]) # 5dimensions
@@ -310,7 +310,7 @@ def IteratorOfOptimal(count, shape, tensor, parametre, Xp, FedCoAssign):
     Wf = np.dot(Wf,Omega)
     # print(Wf)
     #Speed of each CU
-    SP = np.array([100,100,100,100,100,100,100,100])
+    SP = np.array([1000,1000,1000,1000,1000,1000,1000,1000])
     #Bandwitdh of each LK
     BW = np.array([2000,2000,2000,2000,2000,2000,2000,2000,500,500,500,500,125,125])
     Delay = np.array([1.0e-5,1.0e-5,1.0e-5,1.0e-5,1.0e-5,1.0e-5,1.0e-5,1.0e-5,1.0e-4,1.0e-4,1.0e-4,1.0e-4,1.0e-3,1.0e-3])
@@ -444,18 +444,21 @@ with open('data.csv', 'w', newline='') as csvfile:
     writer.writerow(columns)
         # Xp = InitXp(Ncu,Nf)
     N = [2,2]
-    FedCoAssign = np.kron(np.ones((1,3)),np.eye(N[0] + N[1]))  #exf
+    ClassFun = [[1, 1, 1, 0, 0, 0],[0, 0, 0, 1, 1, 1]]
+    # print(ClassFun[1])
+    FedCoAssign = np.block([[np.kron(ClassFun[0],np.eye(N[0]))],[np.kron(ClassFun[1],np.eye(N[1]))]])
+
     print(FedCoAssign)
     Xe = InitXe(8,np.sum(N))
     Xp = np.dot(Xe,FedCoAssign)
     # Define object co-assign constraint
-    for w0 in [5,10,15,20,25,30,35,40,45,50,55,60]:
-        for w1 in [5,10,15,20,25,30,35,40,45,50,55,60]:
+    for w0 in [5,10,15,20,25,30,35,40,45,50]:
+        for w1 in [5,10,15,20,25,30,35,40,45,50]:
             w2 = 35
             w3 = 35
             # for w2 in [1,5,10,15,20,25,30,35]:
                 # for w3 in [1,5,10,15,20,25,30,35]:
-            for w4 in [5,10,15,20,25,30,35,40,45,50,55,60]:
+            for w4 in [5,10,15,20,25,30,35,40,45,50]:
                 for Type in ['FunAssigned','EntityAssigned','FOnlyCU','FOnlyLK','EOnlyCu','EOnlyLK','Random']:
                     # set Param
                     parametre=[N[0],N[1],w0,w1,w2,w3,w4,Type]
