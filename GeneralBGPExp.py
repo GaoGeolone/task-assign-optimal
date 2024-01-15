@@ -119,7 +119,7 @@ def CBGProblem(TestCounter,Ncu,Nlk,Nf,Nprop,tensor,fluxfpair,Frequency,workloadf
     #@POINTER(4)
     workloadf_arr = np.reshape(workloadf,(-1))
     workloadf_1 = np.array(workloadf_arr,dtype=np.double)
-
+    # print(np.diag(workloadf))
     errorcode = lingo.pyLSsetDouPointerLng(pEnv, workloadf_1, pnPointersNow)
     if errorcode != const.LSERR_NO_ERROR_LNG:
         print("errorcode = ", errorcode)
@@ -263,7 +263,7 @@ def InitXe(Ncu, Ne):
 
 
 def IteratorOfOptimal(count, shape, tensor, parametre, Xp, FedCoAssign):
-    N0,N1,omegaf0,omegag0,omegaf1,omegag1,omegal0,Type = parametre
+    N0,N1,omegaf0,omegag0,omegaf1,omegag1,omegal0,Type,ld0,ld1,ld2,ld3,ld4 = parametre
     # print(f'{omegaf0},{omegag0},{omegaf1},{omegag1},{omegal0},{Type}')
     # Entity Number C0 with 10 C1 with 20
     N = np.array([N0,N1]) #Note: Affect F and P Number in LNG file
@@ -305,7 +305,7 @@ def IteratorOfOptimal(count, shape, tensor, parametre, Xp, FedCoAssign):
     FreqForF = np.diag(Omega)  #diag
 
     # Work Load of Entities's functions
-    WfC = np.diag([300,100,100,100,100,100])
+    WfC = np.diag([ld0,ld1,ld4,ld2,ld3,ld4])
     Wf = DefinedKroneckerProduct(WfC,N)
     Wf = np.dot(Wf,Omega)
     # print(Wf)
@@ -368,7 +368,7 @@ def IteratorOfOptimal(count, shape, tensor, parametre, Xp, FedCoAssign):
         XConstraint = '@FOR(fv(k):@SUM(cuv(ci):Xp(ci,k))=1); ! Function Task assignment matrix;\n@FOR(cuxf(i,j):@BIN(Xp(i,j))); ! Function Task assignment matrix;'
         WorkloadOfEachTransportNode = '@FOR(lv(k):MaxRatio >= @SUM(cuxcu(i,j):TENSOR(k,i,j)*@SUM(fxf(fi,fj):Xp(i,fi)*FREQUENCY(fi)*FLUXFORFUNCPAIR(fi,fj)*Xp(j,fj)))/BANDWIDTH(k))  ; '
         WorkloadOfEachComputeUnit = '! Not adopted;'
-    elif Type == 'EOnlyCu':
+    elif Type == 'EOnlyCU':
         Xedef = 'cuxe(cu, e): Xe; ! Entity Task assignment matrix;'
         EntityTaskAssignmentMode = '@FOR(cuxf(ci,fj):Xp(ci,fj)=@SUM(ev(ek):Xe(ci,ek)*OBJECTCONSTRAINT(ek,fj)));'
         XConstraint = '@FOR(ev(k):@SUM(cuv(ci):Xe(ci,k))=1); ! Entity Task assignment matrix;\n@FOR(cuxe(i,j):@BIN(Xe(i,j))); ! Entity Task assignment matrix;'
@@ -439,7 +439,7 @@ columns = ['count','omegaf0','omegag0','omegaf1','omegag1','omegal0','Type','obj
 rows=[]
 random.seed(18)
 # 使用'w'模式创建文件对象，定义newline参数可以避免写入空行
-with open('data.csv', 'w', newline='') as csvfile:
+with open('dataFreq.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(columns)
         # Xp = InitXp(Ncu,Nf)
@@ -452,19 +452,62 @@ with open('data.csv', 'w', newline='') as csvfile:
     Xe = InitXe(8,np.sum(N))
     Xp = np.dot(Xe,FedCoAssign)
     # Define object co-assign constraint
-    for w0 in [5,10,15,20,25,30,35,40,45,50]:
-        for w1 in [5,10,15,20,25,30,35,40,45,50]:
+    for w0 in [10,15,20,25,30,35,40,45,50]:
+        for w1 in [10,15,20,25,30,35,40,45,50]:
             w2 = 35
             w3 = 35
+            ld0 = 300
+            ld1 = 100
+            ld2 = 100
+            ld3 =100
+            ld4 = 100
             # for w2 in [1,5,10,15,20,25,30,35]:
                 # for w3 in [1,5,10,15,20,25,30,35]:
-            for w4 in [5,10,15,20,25,30,35,40,45,50]:
-                for Type in ['FunAssigned','EntityAssigned','FOnlyCU','FOnlyLK','EOnlyCu','EOnlyLK','Random']:
+            for w4 in [10,15,20,25,30,35,40,45,50]:
+                for Type in ['FunAssigned','EntityAssigned','FOnlyCU','FOnlyLK','EOnlyCU','EOnlyLK','Random']:
                     # set Param
-                    parametre=[N[0],N[1],w0,w1,w2,w3,w4,Type]
+                    parametre=[N[0],N[1],w0,w1,w2,w3,w4,Type,ld0,ld1,ld2,ld3,ld4]
                     print(f'test in count:{count}')
                     [obj,xp,Quality]=IteratorOfOptimal(count, shape, tensor, parametre, Xp, FedCoAssign)
                     row = [count,w0,w1,w2,w3,w4,Type,obj,Quality,xp]
+                    rows.append(row)
+                    count = count + 1
+
+    for row in rows:
+        writer.writerow(row)
+rows = []
+columns = ['count','workloadf0','workloadg0','workloadf1','workloadg1','oworkloadl0','Type','obj','SolutionQuality','Xp']
+with open('datawf.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(columns)
+        # Xp = InitXp(Ncu,Nf)
+    N = [2,2]
+    ClassFun = [[1, 1, 1, 0, 0, 0],[0, 0, 0, 1, 1, 1]]
+    # print(ClassFun[1])
+    FedCoAssign = np.block([[np.kron(ClassFun[0],np.eye(N[0]))],[np.kron(ClassFun[1],np.eye(N[1]))]])
+
+    print(FedCoAssign)
+    Xe = InitXe(8,np.sum(N))
+    Xp = np.dot(Xe,FedCoAssign)
+    # Define object co-assign constraint
+    for ld0 in [100,150,200,250,300,350,400,450,500,550]:
+        for ld1 in [100,150,200,250,300,350,400,450,500,550]:
+            w0 = 35
+            w1 = 35
+            w2 = 35
+            w3 = 35
+            w4 = 35
+            ld2 = 200
+            ld3 =200
+            # for w2 in [1,5,10,15,20,25,30,35]:
+                # for w3 in [1,5,10,15,20,25,30,35]:
+            for ld4 in [100,150,200,250,300,350,400,450,500,550]:
+                for Type in ['FunAssigned','EntityAssigned','FOnlyCU','FOnlyLK','EOnlyCU','EOnlyLK','Random']:
+                    # set Param
+                    parametre=[N[0],N[1],w0,w1,w2,w3,w4,Type,ld0,ld1,ld2,ld3,ld4]
+                    print(f'test in count:{count}')
+                    [obj,xp,Quality]=IteratorOfOptimal(count, shape, tensor, parametre, Xp, FedCoAssign)
+                    row = [count,ld0,ld1,ld2,ld3,ld4,Type,obj,Quality,xp]
                     rows.append(row)
                     count = count + 1
 
