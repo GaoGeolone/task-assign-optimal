@@ -308,6 +308,7 @@ def IteratorOfOptimal(count, shape, tensor, parametre, Xp, FedCoAssign):
     WfC = np.diag([ld0,ld1,ld4,ld2,ld3,ld4])
     Wf = DefinedKroneckerProduct(WfC,N)
     Wf = np.dot(Wf,Omega)
+    # print('Workload:',Wf)
     # print(Wf)
     #Speed of each CU
     SP = np.array([1000,1000,1000,1000,1000,1000,1000,1000])
@@ -439,44 +440,44 @@ columns = ['count','omegaf0','omegag0','omegaf1','omegag1','omegal0','Type','obj
 rows=[]
 random.seed(18)
 # 使用'w'模式创建文件对象，定义newline参数可以避免写入空行
-with open('dataFreq.csv', 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile)
-    writer.writerow(columns)
-        # Xp = InitXp(Ncu,Nf)
-    N = [2,2]
-    ClassFun = [[1, 1, 1, 0, 0, 0],[0, 0, 0, 1, 1, 1]]
-    # print(ClassFun[1])
-    FedCoAssign = np.block([[np.kron(ClassFun[0],np.eye(N[0]))],[np.kron(ClassFun[1],np.eye(N[1]))]])
+# with open('dataFreq.csv', 'w', newline='') as csvfile:
+#     writer = csv.writer(csvfile)
+#     writer.writerow(columns)
+#         # Xp = InitXp(Ncu,Nf)
+#     N = [2,2]
+#     ClassFun = [[1, 1, 1, 0, 0, 0],[0, 0, 0, 1, 1, 1]]
+#     # print(ClassFun[1])
+#     FedCoAssign = np.block([[np.kron(ClassFun[0],np.eye(N[0]))],[np.kron(ClassFun[1],np.eye(N[1]))]])
 
-    print(FedCoAssign)
-    Xe = InitXe(8,np.sum(N))
-    Xp = np.dot(Xe,FedCoAssign)
-    # Define object co-assign constraint
-    for w0 in [10,15,20,25,30,35,40,45,50]:
-        for w1 in [10,15,20,25,30,35,40,45,50]:
-            w2 = 35
-            w3 = 35
-            ld0 = 300
-            ld1 = 100
-            ld2 = 100
-            ld3 =100
-            ld4 = 100
-            # for w2 in [1,5,10,15,20,25,30,35]:
-                # for w3 in [1,5,10,15,20,25,30,35]:
-            for w4 in [10,15,20,25,30,35,40,45,50]:
-                for Type in ['FunAssigned','EntityAssigned','FOnlyCU','FOnlyLK','EOnlyCU','EOnlyLK','Random']:
-                    # set Param
-                    parametre=[N[0],N[1],w0,w1,w2,w3,w4,Type,ld0,ld1,ld2,ld3,ld4]
-                    print(f'test in count:{count}')
-                    [obj,xp,Quality]=IteratorOfOptimal(count, shape, tensor, parametre, Xp, FedCoAssign)
-                    row = [count,w0,w1,w2,w3,w4,Type,obj,Quality,xp]
-                    rows.append(row)
-                    count = count + 1
+#     print(FedCoAssign)
+#     Xe = InitXe(8,np.sum(N))
+#     Xp = np.dot(Xe,FedCoAssign)
+#     # Define object co-assign constraint
+#     for w0 in [10,15,20,25,30,35,40,45,50]:
+#         for w1 in [10,15,20,25,30,35,40,45,50]:
+#             w2 = 35
+#             w3 = 35
+#             ld0 = 300
+#             ld1 = 100
+#             ld2 = 100
+#             ld3 =100
+#             ld4 = 100
+#             # for w2 in [1,5,10,15,20,25,30,35]:
+#                 # for w3 in [1,5,10,15,20,25,30,35]:
+#             for w4 in [10,15,20,25,30,35,40,45,50]:
+#                 for Type in ['FunAssigned','EntityAssigned','FOnlyCU','FOnlyLK','EOnlyCU','EOnlyLK','Random']:
+#                     # set Param
+#                     parametre=[N[0],N[1],w0,w1,w2,w3,w4,Type,ld0,ld1,ld2,ld3,ld4]
+#                     print(f'test in count:{count}')
+#                     [obj,xp,Quality]=IteratorOfOptimal(count, shape, tensor, parametre, Xp, FedCoAssign)
+#                     row = [count,w0,w1,w2,w3,w4,Type,obj,Quality,xp]
+#                     rows.append(row)
+#                     count = count + 1
 
-    for row in rows:
-        writer.writerow(row)
+#     for row in rows:
+#         writer.writerow(row)
 rows = []
-columns = ['count','workloadf0','workloadg0','workloadf1','workloadg1','oworkloadl0','Type','obj','SolutionQuality','Xp']
+columns = ['count','workloadf0','workloadg0','workloadf1','workloadg1','workloadl0','Type','obj','SolutionQuality','Xp']
 with open('datawf.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(columns)
@@ -490,8 +491,8 @@ with open('datawf.csv', 'w', newline='') as csvfile:
     Xe = InitXe(8,np.sum(N))
     Xp = np.dot(Xe,FedCoAssign)
     # Define object co-assign constraint
-    for ld0 in [100,150,200,250,300,350,400,450,500,550]:
-        for ld1 in [100,150,200,250,300,350,400,450,500,550]:
+    for ld0 in [200,400,800,1600,3200,6400]:
+        for ld1 in [200,400,800,1600,3200,6400]:
             w0 = 35
             w1 = 35
             w2 = 35
@@ -501,7 +502,7 @@ with open('datawf.csv', 'w', newline='') as csvfile:
             ld3 =200
             # for w2 in [1,5,10,15,20,25,30,35]:
                 # for w3 in [1,5,10,15,20,25,30,35]:
-            for ld4 in [100,150,200,250,300,350,400,450,500,550]:
+            for ld4 in [200,400,800,1600,3200,6400]:
                 for Type in ['FunAssigned','EntityAssigned','FOnlyCU','FOnlyLK','EOnlyCU','EOnlyLK','Random']:
                     # set Param
                     parametre=[N[0],N[1],w0,w1,w2,w3,w4,Type,ld0,ld1,ld2,ld3,ld4]
