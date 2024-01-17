@@ -13,9 +13,11 @@ library("colorspace")
 # Read data.csv
 getwd()
 setwd('g:/15-GEngine/advanced-architecture-scheduler/OptimizerAnalyze')
+
+# Section Exp and discussion subsec1
 df<-read.csv('data.csv')
 # 按照 category 列进行分组
-test <- df[df$Type != "FunAssigned" | df$SolutionQuality != "non-optimal", ]
+#test <- df[df$Type != "FunAssigned" | df$SolutionQuality != "non-optimal", ]
 da_filter <- df[df$Xp != "[[1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
  [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
  [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
@@ -106,6 +108,8 @@ combined_plot <- P1 + P2 + P3 +
   plot_layout(ncol = 3)
 
 combined_plot
+
+# Exp and discussion subsec1
 # 显著性检验定义自定义函数
 da_test <- da_filter %>%
   pivot_wider(
@@ -138,6 +142,7 @@ typeof(test_2_1)
 ggplot(data=test_2_1)
 min(test_4_1)
 
+# Discussion subsec3
 # 找到Funassigned 显著发挥作用的解，对比Xp和Xp*的区别，看看耦合性是如何影响最优的分配结果的
 # test_2_1 取出其中的四分位点
 quartiles <- unname(quantile(test_2_1, probs = c(0.25, 0.5, 0.75)))
@@ -148,9 +153,9 @@ q3 <- quartiles[3]
 Group1 <- da_test[da_test$EntityAssigned - da_test$FunAssigned == q1,]
 Group2 <- da_test[da_test$EntityAssigned - da_test$FunAssigned == q2,]
 Group3 <- da_test[da_test$EntityAssigned - da_test$FunAssigned > q3,]
-group1 <- Group1[,c('omegaf0','omegag0','omegal0')]
-Group2[,c('omegaf0','omegag0','omegal0')]
-Group3[,c('omegaf0','omegag0','omegal0')]
+#group1 <- Group1[,c('omegaf0','omegag0','omegal0')]
+#Group2[,c('omegaf0','omegag0','omegal0')]
+#Group3[,c('omegaf0','omegag0','omegal0')]
 group1[group1$omegag0==group1$omegal0,]
 # 创建条件向量
 condition_o <- (da_test$omegaf0 == 20) & (da_test$omegag0 == 20) & (da_test$omegal0 == 20)
@@ -224,11 +229,129 @@ plot(h2, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.c
 plot(h3, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.color="black",
      edge_colors='red')
 #
-# 创建一个空的超图
+# Discussion subsec1
+setwd('g:/15-GEngine/advanced-architecture-scheduler/OptimizerAnalyze')
 
-# 显示转换后的矩阵
-print(mat)
-#library(igraph)
+dfwf<-read.csv('datawf_exp.csv')
+# 按照 category 列进行分组
+#test <- df[df$Type != "FunAssigned" | df$SolutionQuality != "non-optimal", ]
+da_filter <- dfwf[dfwf$Xp != "[[1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]]" ,]
+#da_filter <- da_filter[da_filter$Type != "Random" , ]
+data_wf0 <- da_filter %>%
+  group_by(workloadf0,Type) %>%
+  summarise(
+    median = median(obj),  # 中位数
+    q1 = quantile(obj, 0.25),  # 下四分位数
+    q3 = quantile(obj, 0.75),  # 上四分位数
+    upper = min(q3, max(obj)),  # 上边缘
+    lower = max(q1, min(obj))  # 下边缘
+  )
+data_wf1 <- da_filter %>%
+  group_by(workloadg0,Type) %>%
+  summarise(
+    median = median(obj),  # 中位数
+    q1 = quantile(obj, 0.25),  # 下四分位数
+    q3 = quantile(obj, 0.75),  # 上四分位数
+    upper = min(q3, max(obj)),  # 上边缘
+    lower = max(q1, min(obj))  # 下边缘
+  )
+data_wf2 <- da_filter %>%
+  group_by(workloadl0,Type) %>%
+  summarise(
+    median = median(obj),  # 中位数
+    q1 = quantile(obj, 0.25),  # 下四分位数
+    q3 = quantile(obj, 0.75),  # 上四分位数
+    upper = min(q3, max(obj)),  # 上边缘
+    lower = max(q1, min(obj))  # 下边缘
+  )
+# Represent it
+P1 <- data_wf0 %>%
+  ggplot( aes(x=workloadf0, y=median, group=Type, color=Type)) +
+  geom_line() +
+  #scale_color_viridis(discrete = TRUE) +
+  #ggtitle("Performance Comparison of Different Scheduling Mechanisms") +
+  #theme_ipsum() +
+  scale_y_continuous(limits = c(0, 300)) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill=Type), alpha = 0.255)+
+  ylab("Minmax Workload")+
+  xlab(expression(paste("Workload of function ",f[0]," as ", Wf[0])))+
+  scale_fill_discrete_qualitative(palette = "Dark 3")+
+  theme(
+    plot.title = element_text(hjust = 0.5),  # 设置标题居中
+    axis.title.y = element_text(hjust = 0.5), # 设置y轴标签居中
+    axis.title.x = element_text(hjust = 0.5)  # 如果需要也可以设置x轴标签居中
+  )+ theme(legend.position = "none")
+P2 <- data_wf1 %>%
+  ggplot( aes(x=workloadg0, y=median, group=Type, color=Type)) +
+  geom_line() +
+  #scale_color_viridis(discrete = TRUE) +
+  #ggtitle("Performance Comparison of Different Scheduling Mechanisms") +
+  #theme_ipsum() +
+  scale_y_continuous(limits = c(0, 300)) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill=Type), alpha = 0.255)+
+  ylab("Minmax Workload")+
+  xlab(expression(paste("Workload of function ",g[0]," as ", wg[0])))+
+  scale_fill_discrete_qualitative(palette = "Dark 3")+
+  theme(
+    plot.title = element_text(hjust = 0.5),  # 设置标题居中
+    axis.title.y = element_text(hjust = 0.5), # 设置y轴标签居中
+    axis.title.x = element_text(hjust = 0.5)  # 如果需要也可以设置x轴标签居中
+  )+ theme(legend.position = "none")
+P3 <- data_wf2 %>%
+  ggplot( aes(x=workloadl0, y=median, group=Type, color=Type)) +
+  geom_line() +
+  #scale_color_viridis(discrete = TRUE) +
+  #ggtitle("Performance Comparison of Different Scheduling Mechanisms") +
+  #theme_ipsum() +
+  scale_y_continuous(limits = c(0, 300)) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill=Type), alpha = 0.255)+
+  ylab("Minmax Workload")+
+  xlab(expression(paste("Workload of function ",l[0]," as ", wl[0])))+
+  scale_fill_discrete_qualitative(palette = "Dark 3")+
+  theme(
+    plot.title = element_text(hjust = 0.5),  # 设置标题居中
+    axis.title.y = element_text(hjust = 0.5), # 设置y轴标签居中
+    axis.title.x = element_text(hjust = 0.5)  # 如果需要也可以设置x轴标签居中
+  )
+combined_plot <- P1 + P2 + P3 +
+  plot_layout(ncol = 3)
+
+combined_plot
+
+# 同样也分析一下计算任务变化时，任务分配方案在内聚上的表现
+# Discussion subsec3
+# 找到Funassigned 显著发挥作用的解，对比Xp和Xp*的区别，看看耦合性是如何影响最优的分配结果的
+
+# 创建条件向量
+dcondition_o <- (dfwf$workloadf0 == 100) & (dfwf$workloadg0 == 100) & (dfwf$workloadl0 == 100)
+dcondition_f <- (dfwf$workloadf0 == 550) & (dfwf$workloadg0 == 100) & (dfwf$workloadl0 == 100)
+dcondition_g <- (dfwf$workloadf0 == 100) & (dfwf$workloadg0 == 550) & (dfwf$workloadl0 == 100)
+dcondition_l <- (dfwf$workloadf0 == 100) & (dfwf$workloadg0 == 100) & (dfwf$workloadl0 == 550)
+dselected_rows <- dfwf[dcondition_o,]
+dselected_rowsf <- dfwf[dcondition_f, ]
+dselected_rowsg <- dfwf[dcondition_g, ]
+dselected_rowsl <- dfwf[dcondition_l, ]
+
+h0 <- hypergraph_from_edgelist(DrawHyperGraphOfFunctions(dselected_rows))
+h1 <- hypergraph_from_edgelist(DrawHyperGraphOfFunctions(dselected_rowsf))
+h2 <- hypergraph_from_edgelist(DrawHyperGraphOfFunctions(dselected_rowsg))
+h3 <- hypergraph_from_edgelist(DrawHyperGraphOfFunctions(dselected_rowsl))
+#h2 <- hypergraph.add.edges(h,list(c('e0-f0','e0-g0','e0-l0'),c('e1-f0','e1-g0','e1-l0'),c('e2-f1','e2-g1','e2-l0'),c('e3-f1','e3-g1','e3-l0')))
+plot(h0, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.color="black",
+     edge_colors='red')
+plot(h1, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.color="black",
+     edge_colors='red')
+plot(h2, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.color="black",
+     edge_colors='red')
+plot(h3, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.color="black",
+     edge_colors='red')
 
 
 # 使用 gridExtra 包将原始图和局部放大图排列布局

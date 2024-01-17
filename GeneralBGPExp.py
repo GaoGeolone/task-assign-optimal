@@ -491,8 +491,8 @@ with open('datawf.csv', 'w', newline='') as csvfile:
     Xe = InitXe(8,np.sum(N))
     Xp = np.dot(Xe,FedCoAssign)
     # Define object co-assign constraint
-    for ld0 in [200,400,800,1600,3200,6400]:
-        for ld1 in [200,400,800,1600,3200,6400]:
+    for ld0 in [200,400,600,800,1000,2000,3000,4000,5000,6000]:
+        for ld1 in [200,400,600,800,1000,2000,3000,4000,5000,6000]:
             w0 = 35
             w1 = 35
             w2 = 35
@@ -502,7 +502,7 @@ with open('datawf.csv', 'w', newline='') as csvfile:
             ld3 =200
             # for w2 in [1,5,10,15,20,25,30,35]:
                 # for w3 in [1,5,10,15,20,25,30,35]:
-            for ld4 in [200,400,800,1600,3200,6400]:
+            for ld4 in [200,400,600,800,1000,2000,3000,4000,5000,6000]:
                 for Type in ['FunAssigned','EntityAssigned','FOnlyCU','FOnlyLK','EOnlyCU','EOnlyLK','Random']:
                     # set Param
                     parametre=[N[0],N[1],w0,w1,w2,w3,w4,Type,ld0,ld1,ld2,ld3,ld4]
