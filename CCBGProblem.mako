@@ -51,7 +51,7 @@ CALC:
   ! @SET( 'TERSEO', 2);
   @SET('MTMODE',1);!Set the mode of multithreading;
   @SET('NTHRDS',16);!Set the number of threads;
-
+  @SET('ITRLIM',72000);!Set the time limit of the model;
   @SET('MXMEMB',1024);!Set Maximum Memory for model;
   ! @MAX/MIN makes model nonlinear.Global solver will linearize @MAX/MIN;
   @SET( 'GLOBAL', 1);

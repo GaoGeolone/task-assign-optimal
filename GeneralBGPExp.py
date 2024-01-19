@@ -258,7 +258,7 @@ def InitXp(Ncu, Nf):
 def InitXe(Ncu, Ne):
     Xe = np.zeros((Ncu,Ne))
     for ide in range(Ne):
-        Xe[random.randint(0,Ncu)][ide] = 1
+        Xe[random.randint(0,Ncu-1)][ide] = 1
     return Xe
 
 
@@ -436,10 +436,10 @@ Adj_matrix = [
 shape = (14, 8, 8)  
 tensor = GenerateTensorFromAdj(Adj_matrix,shape)
 count = 0
-columns = ['count','omegaf0','omegag0','omegaf1','omegag1','omegal0','Type','obj','SolutionQuality','Xp']
-rows=[]
-random.seed(18)
-# 使用'w'模式创建文件对象，定义newline参数可以避免写入空行
+# columns = ['count','omegaf0','omegag0','omegaf1','omegag1','omegal0','Type','obj','SolutionQuality','Xp']
+# rows=[]
+# random.seed(18)
+# # 使用'w'模式创建文件对象，定义newline参数可以避免写入空行
 # with open('dataFreq.csv', 'w', newline='') as csvfile:
 #     writer = csv.writer(csvfile)
 #     writer.writerow(columns)
@@ -476,41 +476,84 @@ random.seed(18)
 
 #     for row in rows:
 #         writer.writerow(row)
+# rows = []
+# columns = ['count','workloadf0','workloadg0','workloadf1','workloadg1','workloadl0','Type','obj','SolutionQuality','Xp']
+# with open('datawf.csv', 'w', newline='') as csvfile:
+#     writer = csv.writer(csvfile)
+#     writer.writerow(columns)
+#         # Xp = InitXp(Ncu,Nf)
+#     N = [2,2]
+#     ClassFun = [[1, 1, 1, 0, 0, 0],[0, 0, 0, 1, 1, 1]]
+#     # print(ClassFun[1])
+#     FedCoAssign = np.block([[np.kron(ClassFun[0],np.eye(N[0]))],[np.kron(ClassFun[1],np.eye(N[1]))]])
+
+#     print(FedCoAssign)
+#     Xe = InitXe(8,np.sum(N))
+#     Xp = np.dot(Xe,FedCoAssign)
+#     # Define object co-assign constraint
+#     for ld0 in [200,400,600,800,1000,2000,3000,4000,5000,6000]:
+#         for ld1 in [200,400,600,800,1000,2000,3000,4000,5000,6000]:
+#             w0 = 35
+#             w1 = 35
+#             w2 = 35
+#             w3 = 35
+#             w4 = 35
+#             ld2 = 200
+#             ld3 =200
+#             # for w2 in [1,5,10,15,20,25,30,35]:
+#                 # for w3 in [1,5,10,15,20,25,30,35]:
+#             for ld4 in [200,400,600,800,1000,2000,3000,4000,5000,6000]:
+#                 for Type in ['FunAssigned','EntityAssigned','FOnlyCU','FOnlyLK','EOnlyCU','EOnlyLK','Random']:
+#                     # set Param
+#                     parametre=[N[0],N[1],w0,w1,w2,w3,w4,Type,ld0,ld1,ld2,ld3,ld4]
+#                     print(f'test in count:{count}')
+#                     [obj,xp,Quality]=IteratorOfOptimal(count, shape, tensor, parametre, Xp, FedCoAssign)
+#                     row = [count,ld0,ld1,ld2,ld3,ld4,Type,obj,Quality,xp]
+#                     rows.append(row)
+#                     count = count + 1
+
+#     for row in rows:
+#         writer.writerow(row)
+
 rows = []
-columns = ['count','workloadf0','workloadg0','workloadf1','workloadg1','workloadl0','Type','obj','SolutionQuality','Xp']
-with open('datawf.csv', 'w', newline='') as csvfile:
+columns = ['count','n0','n1','Type','obj','SolutionQuality','Xp']
+with open('dataN.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(columns)
         # Xp = InitXp(Ncu,Nf)
-    N = [2,2]
-    ClassFun = [[1, 1, 1, 0, 0, 0],[0, 0, 0, 1, 1, 1]]
-    # print(ClassFun[1])
-    FedCoAssign = np.block([[np.kron(ClassFun[0],np.eye(N[0]))],[np.kron(ClassFun[1],np.eye(N[1]))]])
-
-    print(FedCoAssign)
-    Xe = InitXe(8,np.sum(N))
-    Xp = np.dot(Xe,FedCoAssign)
+    
     # Define object co-assign constraint
-    for ld0 in [200,400,600,800,1000,2000,3000,4000,5000,6000]:
-        for ld1 in [200,400,600,800,1000,2000,3000,4000,5000,6000]:
-            w0 = 35
-            w1 = 35
-            w2 = 35
-            w3 = 35
-            w4 = 35
+    for n0 in [1,2,3,4,5,6,7,8,9,10]:
+        for n1 in [1,2,3,4,5,6,7,8,9,10]:
+            N = [n0,n1]
+            ClassFun = [[1, 1, 1, 0, 0, 0],[0, 0, 0, 1, 1, 1]]
+            print(f'N0:{n0},N1:{n1}')
+            FedCoAssign = np.block([[np.block([np.kron(ClassFun[0][0:3],np.eye(N[0])),np.kron(ClassFun[0][3:6],
+                np.zeros((N[0],N[1])))])],[np.block([np.kron(ClassFun[1][0:3],np.zeros((N[1],N[0]))),
+            np.kron(ClassFun[1][3:6],np.eye(N[1]))])]])
+            print(FedCoAssign)
+            Xe = InitXe(8,np.sum(N))
+            Xp = np.dot(Xe,FedCoAssign)
+            ld0 = 300
+            ld1 = 100
+            w0 = 45
+            w1 = 45
+            w2 = 45
+            w3 = 45
+            w4 = 45
             ld2 = 200
             ld3 =200
+            ld4 = 100
             # for w2 in [1,5,10,15,20,25,30,35]:
                 # for w3 in [1,5,10,15,20,25,30,35]:
-            for ld4 in [200,400,600,800,1000,2000,3000,4000,5000,6000]:
-                for Type in ['FunAssigned','EntityAssigned','FOnlyCU','FOnlyLK','EOnlyCU','EOnlyLK','Random']:
-                    # set Param
-                    parametre=[N[0],N[1],w0,w1,w2,w3,w4,Type,ld0,ld1,ld2,ld3,ld4]
-                    print(f'test in count:{count}')
-                    [obj,xp,Quality]=IteratorOfOptimal(count, shape, tensor, parametre, Xp, FedCoAssign)
-                    row = [count,ld0,ld1,ld2,ld3,ld4,Type,obj,Quality,xp]
-                    rows.append(row)
-                    count = count + 1
+            for Type in ['FunAssigned','EntityAssigned','FOnlyCU','FOnlyLK','EOnlyCU','EOnlyLK','Random']:
+                # set Param
+                parametre=[N[0],N[1],w0,w1,w2,w3,w4,Type,ld0,ld1,ld2,ld3,ld4]
+                print(f'test in count:{count}')
+                [obj,xp,Quality]=IteratorOfOptimal(count, shape, tensor, parametre, Xp, FedCoAssign)
+                row = [count,n0,n1,Type,obj,Quality,xp]
+                rows.append(row)
+                count = count + 1
 
     for row in rows:
         writer.writerow(row)

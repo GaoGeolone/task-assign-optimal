@@ -12,7 +12,7 @@ library(HyperG)
 library("colorspace")
 # Read data.csv
 getwd()
-setwd('g:/15-GEngine/advanced-architecture-scheduler/OptimizerAnalyze')
+setwd('g:/15-GEngine/advanced-architecture-scheduler/OptimizerAnalyze/Log2x2')
 
 # Section Exp and discussion subsec1
 df<-read.csv('data.csv')
@@ -278,10 +278,10 @@ P1 <- data_wf0 %>%
   #scale_color_viridis(discrete = TRUE) +
   #ggtitle("Performance Comparison of Different Scheduling Mechanisms") +
   #theme_ipsum() +
-  scale_y_continuous(limits = c(0, 300)) +
+  scale_y_continuous(limits = c(0, 350)) +
   geom_ribbon(aes(ymin = lower, ymax = upper, fill=Type), alpha = 0.255)+
   ylab("Minmax Workload")+
-  xlab(expression(paste("Workload of function ",f[0]," as ", Wf[0])))+
+  xlab(expression(paste("Computational complexity of function ",f[0]," as ", Wf[0])))+
   scale_fill_discrete_qualitative(palette = "Dark 3")+
   theme(
     plot.title = element_text(hjust = 0.5),  # 设置标题居中
@@ -294,10 +294,10 @@ P2 <- data_wf1 %>%
   #scale_color_viridis(discrete = TRUE) +
   #ggtitle("Performance Comparison of Different Scheduling Mechanisms") +
   #theme_ipsum() +
-  scale_y_continuous(limits = c(0, 300)) +
+  scale_y_continuous(limits = c(0, 350)) +
   geom_ribbon(aes(ymin = lower, ymax = upper, fill=Type), alpha = 0.255)+
   ylab("Minmax Workload")+
-  xlab(expression(paste("Workload of function ",g[0]," as ", wg[0])))+
+  xlab(expression(paste("Computational complexity of function ",g[0]," as ", wg[0])))+
   scale_fill_discrete_qualitative(palette = "Dark 3")+
   theme(
     plot.title = element_text(hjust = 0.5),  # 设置标题居中
@@ -310,10 +310,10 @@ P3 <- data_wf2 %>%
   #scale_color_viridis(discrete = TRUE) +
   #ggtitle("Performance Comparison of Different Scheduling Mechanisms") +
   #theme_ipsum() +
-  scale_y_continuous(limits = c(0, 300)) +
+  scale_y_continuous(limits = c(0, 350)) +
   geom_ribbon(aes(ymin = lower, ymax = upper, fill=Type), alpha = 0.255)+
   ylab("Minmax Workload")+
-  xlab(expression(paste("Workload of function ",l[0]," as ", wl[0])))+
+  xlab(expression(paste("Computational complexity of function ",l[0]," as ", wl[0])))+
   scale_fill_discrete_qualitative(palette = "Dark 3")+
   theme(
     plot.title = element_text(hjust = 0.5),  # 设置标题居中
@@ -354,22 +354,31 @@ plot(h3, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.c
      edge_colors='red')
 
 
-# 使用 gridExtra 包将原始图和局部放大图排列布局
-library(gridExtra)
-P1
-# 创建一个2 x 2的布局
-layout <- rbind(c(1, 2, NA), c(3, 3, NA))
-
-Zoom <- data_w2 %>%
-  ggplot( aes(x=omegal0, y=median, group=Type, color=Type)) +
-  geom_line() +
-  scale_color_viridis(discrete = TRUE) +
-  theme_ipsum() +
-  geom_ribbon(aes(ymin = lower, ymax = upper, fill=Type), alpha = 0.3)+
-  coord_cartesian(xlim = c(20, 50), ylim = c(20, 80)) +
-  annotate("rect", xmin = 3, xmax = 8, ymin = 4, ymax = 12, fill = "grey", alpha = 0.2)
-
-Zoom
-# 使用 grid.arrange() 函数进行布局
-grid.arrange(P3, Zoom, layout_matrix = layout)+
-  ggtitle("Performance Comparison of Different Scheduling Mechanisms")
+# 显著性检验定义自定义函数
+da_test <- da_filter %>%
+  pivot_wider(
+    id_cols = c(workloadf0, workloadg0, workloadl0),
+    names_from = Type,
+    values_from = obj)
+print(da_test)
+error<-da_test[da_test$FunAssigned>da_test$EntityAssigned,]
+print(na.omit(error))
+# 单样本 t 检验test_2_1 <- na.omit(da_test$EntityAssigned - da_test$FunAssigned)
+test_2_1 <- na.omit(da_test$EntityAssigned - da_test$FunAssigned)
+test_3_1 <- na.omit(da_test$FOnlyCU - da_test$FunAssigned)
+test_4_1 <- na.omit(da_test$EOnlyCU - da_test$FunAssigned)
+test_5_1 <- na.omit(da_test$FOnlyLK - da_test$FunAssigned)
+test_6_1 <- na.omit(da_test$EOnlyLK - da_test$FunAssigned)
+test_7_1 <- na.omit(da_test$Random - da_test$FunAssigned)
+result1 <- t.test(test_2_1, mu = 0, alternative = "greater")
+result2 <- t.test(test_3_1, mu = 0, alternative = "greater")
+result3 <- t.test(test_4_1, mu = 0, alternative = "greater")
+result4 <- t.test(test_5_1, mu = 0, alternative = "greater")
+result5 <- t.test(test_6_1, mu = 0, alternative = "greater")
+result6 <- t.test(test_7_1, mu = 0, alternative = "greater")
+print(result1)
+print(result2)
+print(result3)
+print(result4)
+print(result5)
+print(result6)

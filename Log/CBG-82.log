@@ -76,6 +76,7 @@
 ?   ! @SET( 'TERSEO', 2);
 ?   @SET('MTMODE',1);!Set the mode of multithreading;
 ?   @SET('NTHRDS',16);!Set the number of threads;
+?   @SET('ITRLIM',72000);!Set the time limit of the model;
 ?   @SET('MXMEMB',1024);!Set Maximum Memory for model;
 ?   ! @MAX/MIN makes model nonlinear.Global solver will linearize @MAX/MIN;
 ?   @SET( 'GLOBAL', 1);
@@ -121,11 +122,8 @@
   Solving ...
  
       Iters   Steps  Active     Status     Objective         Bound
-         24       1       0   FEASIBLE      31.5        -0.100E+31
-     192262       3       0   FEASIBLE      31.5          3.59
-     361212      22       3   FEASIBLE      31.5          3.59
-     502654      58       7   FEASIBLE      31.5          18.9
-     563043      85       0    OPTIMAL      31.5          31.5
+         34       1       0   FEASIBLE      40.5        -0.100E+31
+      73712       1       0   FEASIBLE      40.5          4.61
  
   Running dual solver...
  
@@ -134,13 +132,13 @@
   Licensee info: gaojialong@nudt.edu.cn
   License expires: 30 APR 2024
  
-  Global optimal solution found.
-  Objective value:                              31.50000
-  Objective bound:                              31.50000
+  Feasible solution found.
+  Objective value:                              40.50000
+  Objective bound:                              4.612500
   Infeasibilities:                              0.000000
-  Extended solver steps:                              84
-  Total solver iterations:                        563043
-  Elapsed runtime seconds:                         37.17
+  Extended solver steps:                               0
+  Total solver iterations:                         73712
+  Elapsed runtime seconds:                          4.49
  
   Running output operations ...
  
@@ -158,8 +156,14 @@
  
  
  
+ [Error Code:   92]
+ 
+  Warning: The current solution may be nonoptimal/infeasible
+  for the current model.
+ 
+ 
                                 Variable           Value        Reduced Cost
-                                MAXRATIO        31.50000            0.000000
+                                MAXRATIO        40.50000            0.000000
                         TENSOR( 1, 1, 1)        1.000000            0.000000
                         TENSOR( 1, 1, 2)        1.000000            0.000000
                         TENSOR( 1, 1, 3)        1.000000            0.000000
@@ -1200,7 +1204,7 @@
                           OMEGA( 12, 10)        0.000000            0.000000
                           OMEGA( 12, 11)        0.000000            0.000000
                           OMEGA( 12, 12)        0.000000            0.000000
-                         WORKLOAD( 1, 1)        7000.000            0.000000
+                         WORKLOAD( 1, 1)        13500.00            0.000000
                          WORKLOAD( 1, 2)        0.000000            0.000000
                          WORKLOAD( 1, 3)        0.000000            0.000000
                          WORKLOAD( 1, 4)        0.000000            0.000000
@@ -1213,7 +1217,7 @@
                         WORKLOAD( 1, 11)        0.000000            0.000000
                         WORKLOAD( 1, 12)        0.000000            0.000000
                          WORKLOAD( 2, 1)        0.000000            0.000000
-                         WORKLOAD( 2, 2)        7000.000            0.000000
+                         WORKLOAD( 2, 2)        13500.00            0.000000
                          WORKLOAD( 2, 3)        0.000000            0.000000
                          WORKLOAD( 2, 4)        0.000000            0.000000
                          WORKLOAD( 2, 5)        0.000000            0.000000
@@ -1226,7 +1230,7 @@
                         WORKLOAD( 2, 12)        0.000000            0.000000
                          WORKLOAD( 3, 1)        0.000000            0.000000
                          WORKLOAD( 3, 2)        0.000000            0.000000
-                         WORKLOAD( 3, 3)        14000.00            0.000000
+                         WORKLOAD( 3, 3)        4500.000            0.000000
                          WORKLOAD( 3, 4)        0.000000            0.000000
                          WORKLOAD( 3, 5)        0.000000            0.000000
                          WORKLOAD( 3, 6)        0.000000            0.000000
@@ -1239,7 +1243,7 @@
                          WORKLOAD( 4, 1)        0.000000            0.000000
                          WORKLOAD( 4, 2)        0.000000            0.000000
                          WORKLOAD( 4, 3)        0.000000            0.000000
-                         WORKLOAD( 4, 4)        14000.00            0.000000
+                         WORKLOAD( 4, 4)        4500.000            0.000000
                          WORKLOAD( 4, 5)        0.000000            0.000000
                          WORKLOAD( 4, 6)        0.000000            0.000000
                          WORKLOAD( 4, 7)        0.000000            0.000000
@@ -1252,7 +1256,7 @@
                          WORKLOAD( 5, 2)        0.000000            0.000000
                          WORKLOAD( 5, 3)        0.000000            0.000000
                          WORKLOAD( 5, 4)        0.000000            0.000000
-                         WORKLOAD( 5, 5)        14000.00            0.000000
+                         WORKLOAD( 5, 5)        4500.000            0.000000
                          WORKLOAD( 5, 6)        0.000000            0.000000
                          WORKLOAD( 5, 7)        0.000000            0.000000
                          WORKLOAD( 5, 8)        0.000000            0.000000
@@ -1265,7 +1269,7 @@
                          WORKLOAD( 6, 3)        0.000000            0.000000
                          WORKLOAD( 6, 4)        0.000000            0.000000
                          WORKLOAD( 6, 5)        0.000000            0.000000
-                         WORKLOAD( 6, 6)        14000.00            0.000000
+                         WORKLOAD( 6, 6)        4500.000            0.000000
                          WORKLOAD( 6, 7)        0.000000            0.000000
                          WORKLOAD( 6, 8)        0.000000            0.000000
                          WORKLOAD( 6, 9)        0.000000            0.000000
@@ -1278,7 +1282,7 @@
                          WORKLOAD( 7, 4)        0.000000            0.000000
                          WORKLOAD( 7, 5)        0.000000            0.000000
                          WORKLOAD( 7, 6)        0.000000            0.000000
-                         WORKLOAD( 7, 7)        7000.000            0.000000
+                         WORKLOAD( 7, 7)        9000.000            0.000000
                          WORKLOAD( 7, 8)        0.000000            0.000000
                          WORKLOAD( 7, 9)        0.000000            0.000000
                         WORKLOAD( 7, 10)        0.000000            0.000000
@@ -1291,7 +1295,7 @@
                          WORKLOAD( 8, 5)        0.000000            0.000000
                          WORKLOAD( 8, 6)        0.000000            0.000000
                          WORKLOAD( 8, 7)        0.000000            0.000000
-                         WORKLOAD( 8, 8)        7000.000            0.000000
+                         WORKLOAD( 8, 8)        9000.000            0.000000
                          WORKLOAD( 8, 9)        0.000000            0.000000
                         WORKLOAD( 8, 10)        0.000000            0.000000
                         WORKLOAD( 8, 11)        0.000000            0.000000
@@ -1304,7 +1308,7 @@
                          WORKLOAD( 9, 6)        0.000000            0.000000
                          WORKLOAD( 9, 7)        0.000000            0.000000
                          WORKLOAD( 9, 8)        0.000000            0.000000
-                         WORKLOAD( 9, 9)        7000.000            0.000000
+                         WORKLOAD( 9, 9)        9000.000            0.000000
                         WORKLOAD( 9, 10)        0.000000            0.000000
                         WORKLOAD( 9, 11)        0.000000            0.000000
                         WORKLOAD( 9, 12)        0.000000            0.000000
@@ -1317,7 +1321,7 @@
                         WORKLOAD( 10, 7)        0.000000            0.000000
                         WORKLOAD( 10, 8)        0.000000            0.000000
                         WORKLOAD( 10, 9)        0.000000            0.000000
-                       WORKLOAD( 10, 10)        7000.000            0.000000
+                       WORKLOAD( 10, 10)        9000.000            0.000000
                        WORKLOAD( 10, 11)        0.000000            0.000000
                        WORKLOAD( 10, 12)        0.000000            0.000000
                         WORKLOAD( 11, 1)        0.000000            0.000000
@@ -1330,7 +1334,7 @@
                         WORKLOAD( 11, 8)        0.000000            0.000000
                         WORKLOAD( 11, 9)        0.000000            0.000000
                        WORKLOAD( 11, 10)        0.000000            0.000000
-                       WORKLOAD( 11, 11)        14000.00            0.000000
+                       WORKLOAD( 11, 11)        4500.000            0.000000
                        WORKLOAD( 11, 12)        0.000000            0.000000
                         WORKLOAD( 12, 1)        0.000000            0.000000
                         WORKLOAD( 12, 2)        0.000000            0.000000
@@ -1343,151 +1347,151 @@
                         WORKLOAD( 12, 9)        0.000000            0.000000
                        WORKLOAD( 12, 10)        0.000000            0.000000
                        WORKLOAD( 12, 11)        0.000000            0.000000
-                       WORKLOAD( 12, 12)        14000.00            0.000000
-                  DELAYCONSTRAINT( 1, 1)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 1, 2)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 1, 3)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 1, 4)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 1, 5)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 1, 6)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 1, 7)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 1, 8)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 1, 9)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 1, 10)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 1, 11)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 1, 12)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 2, 1)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 2, 2)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 2, 3)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 2, 4)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 2, 5)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 2, 6)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 2, 7)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 2, 8)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 2, 9)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 2, 10)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 2, 11)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 2, 12)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 3, 1)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 3, 2)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 3, 3)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 3, 4)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 3, 5)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 3, 6)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 3, 7)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 3, 8)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 3, 9)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 3, 10)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 3, 11)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 3, 12)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 4, 1)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 4, 2)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 4, 3)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 4, 4)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 4, 5)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 4, 6)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 4, 7)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 4, 8)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 4, 9)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 4, 10)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 4, 11)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 4, 12)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 5, 1)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 5, 2)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 5, 3)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 5, 4)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 5, 5)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 5, 6)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 5, 7)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 5, 8)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 5, 9)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 5, 10)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 5, 11)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 5, 12)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 6, 1)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 6, 2)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 6, 3)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 6, 4)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 6, 5)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 6, 6)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 6, 7)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 6, 8)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 6, 9)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 6, 10)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 6, 11)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 6, 12)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 7, 1)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 7, 2)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 7, 3)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 7, 4)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 7, 5)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 7, 6)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 7, 7)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 7, 8)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 7, 9)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 7, 10)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 7, 11)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 7, 12)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 8, 1)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 8, 2)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 8, 3)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 8, 4)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 8, 5)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 8, 6)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 8, 7)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 8, 8)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 8, 9)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 8, 10)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 8, 11)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 8, 12)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 9, 1)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 9, 2)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 9, 3)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 9, 4)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 9, 5)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 9, 6)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 9, 7)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 9, 8)       0.2857143E-01        0.000000
-                  DELAYCONSTRAINT( 9, 9)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 9, 10)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 9, 11)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 9, 12)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 10, 1)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 10, 2)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 10, 3)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 10, 4)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 10, 5)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 10, 6)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 10, 7)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 10, 8)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 10, 9)       0.2857143E-01        0.000000
-                DELAYCONSTRAINT( 10, 10)       0.2857143E-01        0.000000
-                DELAYCONSTRAINT( 10, 11)       0.2857143E-01        0.000000
-                DELAYCONSTRAINT( 10, 12)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 11, 1)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 11, 2)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 11, 3)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 11, 4)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 11, 5)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 11, 6)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 11, 7)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 11, 8)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 11, 9)       0.2857143E-01        0.000000
-                DELAYCONSTRAINT( 11, 10)       0.2857143E-01        0.000000
-                DELAYCONSTRAINT( 11, 11)       0.2857143E-01        0.000000
-                DELAYCONSTRAINT( 11, 12)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 12, 1)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 12, 2)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 12, 3)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 12, 4)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 12, 5)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 12, 6)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 12, 7)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 12, 8)       0.2857143E-01        0.000000
-                 DELAYCONSTRAINT( 12, 9)       0.2857143E-01        0.000000
-                DELAYCONSTRAINT( 12, 10)       0.2857143E-01        0.000000
-                DELAYCONSTRAINT( 12, 11)       0.2857143E-01        0.000000
-                DELAYCONSTRAINT( 12, 12)       0.2857143E-01        0.000000
+                       WORKLOAD( 12, 12)        4500.000            0.000000
+                  DELAYCONSTRAINT( 1, 1)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 1, 2)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 1, 3)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 1, 4)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 1, 5)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 1, 6)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 1, 7)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 1, 8)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 1, 9)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 1, 10)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 1, 11)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 1, 12)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 2, 1)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 2, 2)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 2, 3)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 2, 4)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 2, 5)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 2, 6)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 2, 7)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 2, 8)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 2, 9)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 2, 10)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 2, 11)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 2, 12)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 3, 1)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 3, 2)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 3, 3)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 3, 4)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 3, 5)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 3, 6)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 3, 7)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 3, 8)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 3, 9)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 3, 10)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 3, 11)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 3, 12)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 4, 1)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 4, 2)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 4, 3)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 4, 4)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 4, 5)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 4, 6)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 4, 7)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 4, 8)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 4, 9)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 4, 10)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 4, 11)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 4, 12)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 5, 1)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 5, 2)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 5, 3)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 5, 4)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 5, 5)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 5, 6)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 5, 7)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 5, 8)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 5, 9)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 5, 10)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 5, 11)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 5, 12)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 6, 1)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 6, 2)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 6, 3)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 6, 4)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 6, 5)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 6, 6)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 6, 7)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 6, 8)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 6, 9)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 6, 10)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 6, 11)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 6, 12)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 7, 1)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 7, 2)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 7, 3)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 7, 4)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 7, 5)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 7, 6)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 7, 7)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 7, 8)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 7, 9)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 7, 10)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 7, 11)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 7, 12)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 8, 1)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 8, 2)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 8, 3)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 8, 4)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 8, 5)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 8, 6)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 8, 7)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 8, 8)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 8, 9)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 8, 10)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 8, 11)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 8, 12)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 9, 1)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 9, 2)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 9, 3)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 9, 4)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 9, 5)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 9, 6)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 9, 7)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 9, 8)       0.2222222E-01        0.000000
+                  DELAYCONSTRAINT( 9, 9)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 9, 10)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 9, 11)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 9, 12)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 10, 1)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 10, 2)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 10, 3)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 10, 4)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 10, 5)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 10, 6)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 10, 7)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 10, 8)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 10, 9)       0.2222222E-01        0.000000
+                DELAYCONSTRAINT( 10, 10)       0.2222222E-01        0.000000
+                DELAYCONSTRAINT( 10, 11)       0.2222222E-01        0.000000
+                DELAYCONSTRAINT( 10, 12)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 11, 1)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 11, 2)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 11, 3)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 11, 4)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 11, 5)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 11, 6)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 11, 7)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 11, 8)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 11, 9)       0.2222222E-01        0.000000
+                DELAYCONSTRAINT( 11, 10)       0.2222222E-01        0.000000
+                DELAYCONSTRAINT( 11, 11)       0.2222222E-01        0.000000
+                DELAYCONSTRAINT( 11, 12)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 12, 1)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 12, 2)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 12, 3)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 12, 4)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 12, 5)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 12, 6)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 12, 7)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 12, 8)       0.2222222E-01        0.000000
+                 DELAYCONSTRAINT( 12, 9)       0.2222222E-01        0.000000
+                DELAYCONSTRAINT( 12, 10)       0.2222222E-01        0.000000
+                DELAYCONSTRAINT( 12, 11)       0.2222222E-01        0.000000
+                DELAYCONSTRAINT( 12, 12)       0.2222222E-01        0.000000
                   FLUXFORFUNCPAIR( 1, 1)        35.00000            0.000000
                   FLUXFORFUNCPAIR( 1, 2)        0.000000            0.000000
                   FLUXFORFUNCPAIR( 1, 3)        35.00000            0.000000
@@ -1690,18 +1694,18 @@
                               CULOAD( 6)        0.000000            0.000000
                               CULOAD( 7)        0.000000            0.000000
                               CULOAD( 8)        0.000000            0.000000
-                           FREQUENCY( 1)        35.00000            0.000000
-                           FREQUENCY( 2)        35.00000            0.000000
-                           FREQUENCY( 3)        35.00000            0.000000
-                           FREQUENCY( 4)        35.00000            0.000000
-                           FREQUENCY( 5)        35.00000            0.000000
-                           FREQUENCY( 6)        35.00000            0.000000
-                           FREQUENCY( 7)        35.00000            0.000000
-                           FREQUENCY( 8)        35.00000            0.000000
-                           FREQUENCY( 9)        35.00000            0.000000
-                          FREQUENCY( 10)        35.00000            0.000000
-                          FREQUENCY( 11)        35.00000            0.000000
-                          FREQUENCY( 12)        35.00000            0.000000
+                           FREQUENCY( 1)        45.00000            0.000000
+                           FREQUENCY( 2)        45.00000            0.000000
+                           FREQUENCY( 3)        45.00000            0.000000
+                           FREQUENCY( 4)        45.00000            0.000000
+                           FREQUENCY( 5)        45.00000            0.000000
+                           FREQUENCY( 6)        45.00000            0.000000
+                           FREQUENCY( 7)        45.00000            0.000000
+                           FREQUENCY( 8)        45.00000            0.000000
+                           FREQUENCY( 9)        45.00000            0.000000
+                          FREQUENCY( 10)        45.00000            0.000000
+                          FREQUENCY( 11)        45.00000            0.000000
+                          FREQUENCY( 12)        45.00000            0.000000
                               EVDEMO( 1)        0.000000            0.000000
                               EVDEMO( 2)        0.000000            0.000000
                               EVDEMO( 3)        0.000000            0.000000
@@ -1794,18 +1798,18 @@
                               XP( 2, 10)        0.000000            0.000000
                               XP( 2, 11)        0.000000            0.000000
                               XP( 2, 12)        0.000000            0.000000
-                               XP( 3, 1)        1.000000            0.000000
-                               XP( 3, 2)        1.000000            0.000000
-                               XP( 3, 3)        1.000000            0.000000
-                               XP( 3, 4)        1.000000            0.000000
-                               XP( 3, 5)        1.000000            0.000000
-                               XP( 3, 6)        1.000000            0.000000
-                               XP( 3, 7)        1.000000            0.000000
-                               XP( 3, 8)        1.000000            0.000000
-                               XP( 3, 9)        1.000000            0.000000
-                              XP( 3, 10)        1.000000            0.000000
-                              XP( 3, 11)        1.000000            0.000000
-                              XP( 3, 12)        1.000000            0.000000
+                               XP( 3, 1)        0.000000            0.000000
+                               XP( 3, 2)        0.000000            0.000000
+                               XP( 3, 3)        0.000000            0.000000
+                               XP( 3, 4)        0.000000            0.000000
+                               XP( 3, 5)        0.000000            0.000000
+                               XP( 3, 6)        0.000000            0.000000
+                               XP( 3, 7)        0.000000            0.000000
+                               XP( 3, 8)        0.000000            0.000000
+                               XP( 3, 9)        0.000000            0.000000
+                              XP( 3, 10)        0.000000            0.000000
+                              XP( 3, 11)        0.000000            0.000000
+                              XP( 3, 12)        0.000000            0.000000
                                XP( 4, 1)        0.000000            0.000000
                                XP( 4, 2)        0.000000            0.000000
                                XP( 4, 3)        0.000000            0.000000
@@ -1854,18 +1858,18 @@
                               XP( 7, 10)        0.000000            0.000000
                               XP( 7, 11)        0.000000            0.000000
                               XP( 7, 12)        0.000000            0.000000
-                               XP( 8, 1)        0.000000            0.000000
-                               XP( 8, 2)        0.000000            0.000000
-                               XP( 8, 3)        0.000000            0.000000
-                               XP( 8, 4)        0.000000            0.000000
-                               XP( 8, 5)        0.000000            0.000000
-                               XP( 8, 6)        0.000000            0.000000
-                               XP( 8, 7)        0.000000            0.000000
-                               XP( 8, 8)        0.000000            0.000000
-                               XP( 8, 9)        0.000000            0.000000
-                              XP( 8, 10)        0.000000            0.000000
-                              XP( 8, 11)        0.000000            0.000000
-                              XP( 8, 12)        0.000000            0.000000
+                               XP( 8, 1)        1.000000            0.000000
+                               XP( 8, 2)        1.000000            0.000000
+                               XP( 8, 3)        1.000000            0.000000
+                               XP( 8, 4)        1.000000            0.000000
+                               XP( 8, 5)        1.000000            0.000000
+                               XP( 8, 6)        1.000000            0.000000
+                               XP( 8, 7)        1.000000            0.000000
+                               XP( 8, 8)        1.000000            0.000000
+                               XP( 8, 9)        1.000000            0.000000
+                              XP( 8, 10)        1.000000            0.000000
+                              XP( 8, 11)        1.000000            0.000000
+                              XP( 8, 12)        1.000000            0.000000
                                XE( 1, 1)        0.000000            0.000000
                                XE( 1, 2)        0.000000            0.000000
                                XE( 1, 3)        0.000000            0.000000
@@ -1874,10 +1878,10 @@
                                XE( 2, 2)        0.000000            0.000000
                                XE( 2, 3)        0.000000            0.000000
                                XE( 2, 4)        0.000000            0.000000
-                               XE( 3, 1)        1.000000            0.000000
-                               XE( 3, 2)        1.000000            0.000000
-                               XE( 3, 3)        1.000000            0.000000
-                               XE( 3, 4)        1.000000            0.000000
+                               XE( 3, 1)        0.000000            0.000000
+                               XE( 3, 2)        0.000000            0.000000
+                               XE( 3, 3)        0.000000            0.000000
+                               XE( 3, 4)        0.000000            0.000000
                                XE( 4, 1)        0.000000            0.000000
                                XE( 4, 2)        0.000000            0.000000
                                XE( 4, 3)        0.000000            0.000000
@@ -1894,10 +1898,10 @@
                                XE( 7, 2)        0.000000            0.000000
                                XE( 7, 3)        0.000000            0.000000
                                XE( 7, 4)        0.000000            0.000000
-                               XE( 8, 1)        0.000000            0.000000
-                               XE( 8, 2)        0.000000            0.000000
-                               XE( 8, 3)        0.000000            0.000000
-                               XE( 8, 4)        0.000000            0.000000
+                               XE( 8, 1)        1.000000            0.000000
+                               XE( 8, 2)        1.000000            0.000000
+                               XE( 8, 3)        1.000000            0.000000
+                               XE( 8, 4)        1.000000            0.000000
                  OBJECTCONSTRAINT( 1, 1)        1.000000            0.000000
                  OBJECTCONSTRAINT( 1, 2)        0.000000            0.000000
                  OBJECTCONSTRAINT( 1, 3)        1.000000            0.000000
@@ -1948,264 +1952,264 @@
                 OBJECTCONSTRAINT( 4, 12)        1.000000            0.000000
  
                                      Row    Slack or Surplus      Dual Price
-                                     OBJ        31.50000           -1.000000
-                                       2        0.000000           -5.075000
-                                       3        0.000000           -5.075000
-                                       4        0.000000           -8.400000
-                                       5        0.000000           -8.400000
-                                       6        0.000000           -3.850000
-                                       7        0.000000           -3.850000
-                                       8        0.000000           -4.637500
-                                       9        0.000000           -4.637500
-                                      10        0.000000           -7.525000
-                                      11        0.000000           -7.525000
-                                      12        0.000000           -2.012500
-                                      13        0.000000           -2.012500
-                                      14        0.000000           -5.075000
-                                      15        0.000000           -5.075000
-                                      16        0.000000           -8.400000
-                                      17        0.000000           -8.400000
-                                      18        0.000000           -3.850000
-                                      19        0.000000           -3.850000
-                                      20        0.000000           -4.637500
-                                      21        0.000000           -4.637500
-                                      22        0.000000           -7.525000
-                                      23        0.000000           -7.525000
-                                      24        0.000000           -2.012500
-                                      25        0.000000           -2.012500
-                                      26        0.000000           -5.075000
-                                      27        0.000000           -5.075000
-                                      28        0.000000           -8.400000
-                                      29        0.000000           -8.400000
-                                      30        0.000000           -3.850000
-                                      31        0.000000           -3.850000
-                                      32        0.000000           -4.637500
-                                      33        0.000000           -4.637500
-                                      34        0.000000           -7.525000
-                                      35        0.000000           -7.525000
-                                      36        0.000000           -2.012500
-                                      37        0.000000           -2.012500
-                                      38        0.000000           -5.075000
-                                      39        0.000000           -5.075000
-                                      40        0.000000           -8.400000
-                                      41        0.000000           -8.400000
-                                      42        0.000000           -3.850000
-                                      43        0.000000           -3.850000
-                                      44        0.000000           -4.637500
-                                      45        0.000000           -4.637500
-                                      46        0.000000           -7.525000
-                                      47        0.000000           -7.525000
-                                      48        0.000000           -2.012500
-                                      49        0.000000           -2.012500
-                                      50        0.000000           -5.075000
-                                      51        0.000000           -5.075000
-                                      52        0.000000           -8.400000
-                                      53        0.000000           -8.400000
-                                      54        0.000000           -3.850000
-                                      55        0.000000           -3.850000
-                                      56        0.000000           -4.637500
-                                      57        0.000000           -4.637500
-                                      58        0.000000           -7.525000
-                                      59        0.000000           -7.525000
-                                      60        0.000000           -2.012500
-                                      61        0.000000           -2.012500
-                                      62        0.000000           -5.075000
-                                      63        0.000000           -5.075000
-                                      64        0.000000           -8.400000
-                                      65        0.000000           -8.400000
-                                      66        0.000000           -3.850000
-                                      67        0.000000           -3.850000
-                                      68        0.000000           -4.637500
-                                      69        0.000000           -4.637500
-                                      70        0.000000           -7.525000
-                                      71        0.000000           -7.525000
-                                      72        0.000000           -2.012500
-                                      73        0.000000           -2.012500
-                                      74        0.000000           -5.075000
-                                      75        0.000000           -5.075000
-                                      76        0.000000           -8.400000
-                                      77        0.000000           -8.400000
-                                      78        0.000000           -3.850000
-                                      79        0.000000           -3.850000
-                                      80        0.000000           -4.637500
-                                      81        0.000000           -4.637500
-                                      82        0.000000           -7.525000
-                                      83        0.000000           -7.525000
-                                      84        0.000000           -2.012500
-                                      85        0.000000           -2.012500
-                                      86        0.000000           -5.075000
-                                      87        0.000000           -5.075000
-                                      88        0.000000           -8.400000
-                                      89        0.000000           -8.400000
-                                      90        0.000000           -3.850000
-                                      91        0.000000           -3.850000
-                                      92        0.000000           -4.637500
-                                      93        0.000000           -4.637500
-                                      94        0.000000           -7.525000
-                                      95        0.000000           -7.525000
-                                      96        0.000000           -2.012500
-                                      97        0.000000           -2.012500
-                                      98        31.50000            0.000000
-                                      99        31.50000            0.000000
-                                     100        0.000000           -1.000000
-                                     101        31.50000            0.000000
-                                     102        31.50000            0.000000
-                                     103        31.50000            0.000000
-                                     104        31.50000            0.000000
-                                     105        31.50000            0.000000
-                                     106        31.50000            0.000000
-                                     107        31.50000            0.000000
-                                     108        31.50000            0.000000
-                                     109        31.50000            0.000000
-                                     110        31.50000            0.000000
-                                     111        31.50000            0.000000
-                                     112       0.2806143E-01        0.000000
-                                     113       0.2806143E-01        0.000000
-                                     114       0.2806143E-01        0.000000
-                                     115       0.2806143E-01        0.000000
-                                     116       0.2806143E-01        0.000000
-                                     117       0.2806143E-01        0.000000
-                                     118       0.2806143E-01        0.000000
-                                     119       0.2806143E-01        0.000000
-                                     120       0.2806143E-01        0.000000
-                                     121       0.2806143E-01        0.000000
-                                     122       0.2806143E-01        0.000000
-                                     123       0.2806143E-01        0.000000
-                                     124       0.2806143E-01        0.000000
-                                     125       0.2806143E-01        0.000000
-                                     126       0.2806143E-01        0.000000
-                                     127       0.2806143E-01        0.000000
-                                     128       0.2806143E-01        0.000000
-                                     129       0.2806143E-01        0.000000
-                                     130       0.2806143E-01        0.000000
-                                     131       0.2806143E-01        0.000000
-                                     132       0.2806143E-01        0.000000
-                                     133       0.2806143E-01        0.000000
-                                     134       0.2806143E-01        0.000000
-                                     135       0.2806143E-01        0.000000
-                                     136       0.2806143E-01        0.000000
-                                     137       0.2806143E-01        0.000000
-                                     138       0.2806143E-01        0.000000
-                                     139       0.2806143E-01        0.000000
-                                     140       0.2806143E-01        0.000000
-                                     141       0.2806143E-01        0.000000
-                                     142       0.2806143E-01        0.000000
-                                     143       0.2806143E-01        0.000000
-                                     144       0.2806143E-01        0.000000
-                                     145       0.2806143E-01        0.000000
-                                     146       0.2806143E-01        0.000000
-                                     147       0.2806143E-01        0.000000
-                                     148       0.2806143E-01        0.000000
-                                     149       0.2806143E-01        0.000000
-                                     150       0.2806143E-01        0.000000
-                                     151       0.2806143E-01        0.000000
-                                     152       0.2806143E-01        0.000000
-                                     153       0.2806143E-01        0.000000
-                                     154       0.2806143E-01        0.000000
-                                     155       0.2806143E-01        0.000000
-                                     156       0.2806143E-01        0.000000
-                                     157       0.2806143E-01        0.000000
-                                     158       0.2806143E-01        0.000000
-                                     159       0.2806143E-01        0.000000
-                                     160       0.2806143E-01        0.000000
-                                     161       0.2806143E-01        0.000000
-                                     162       0.2806143E-01        0.000000
-                                     163       0.2806143E-01        0.000000
-                                     164       0.2806143E-01        0.000000
-                                     165       0.2806143E-01        0.000000
-                                     166       0.2806143E-01        0.000000
-                                     167       0.2806143E-01        0.000000
-                                     168       0.2806143E-01        0.000000
-                                     169       0.2806143E-01        0.000000
-                                     170       0.2806143E-01        0.000000
-                                     171       0.2806143E-01        0.000000
-                                     172       0.2806143E-01        0.000000
-                                     173       0.2806143E-01        0.000000
-                                     174       0.2806143E-01        0.000000
-                                     175       0.2806143E-01        0.000000
-                                     176       0.2806143E-01        0.000000
-                                     177       0.2806143E-01        0.000000
-                                     178       0.2806143E-01        0.000000
-                                     179       0.2806143E-01        0.000000
-                                     180       0.2806143E-01        0.000000
-                                     181       0.2806143E-01        0.000000
-                                     182       0.2806143E-01        0.000000
-                                     183       0.2806143E-01        0.000000
-                                     184       0.2806143E-01        0.000000
-                                     185       0.2806143E-01        0.000000
-                                     186       0.2806143E-01        0.000000
-                                     187       0.2806143E-01        0.000000
-                                     188       0.2806143E-01        0.000000
-                                     189       0.2806143E-01        0.000000
-                                     190       0.2806143E-01        0.000000
-                                     191       0.2806143E-01        0.000000
-                                     192       0.2806143E-01        0.000000
-                                     193       0.2806143E-01        0.000000
-                                     194       0.2806143E-01        0.000000
-                                     195       0.2806143E-01        0.000000
-                                     196       0.2806143E-01        0.000000
-                                     197       0.2806143E-01        0.000000
-                                     198       0.2806143E-01        0.000000
-                                     199       0.2806143E-01        0.000000
-                                     200       0.2806143E-01        0.000000
-                                     201       0.2806143E-01        0.000000
-                                     202       0.2806143E-01        0.000000
-                                     203       0.2806143E-01        0.000000
-                                     204       0.2806143E-01        0.000000
-                                     205       0.2806143E-01        0.000000
-                                     206       0.2806143E-01        0.000000
-                                     207       0.2806143E-01        0.000000
-                                     208       0.2806143E-01        0.000000
-                                     209       0.2806143E-01        0.000000
-                                     210       0.2806143E-01        0.000000
-                                     211       0.2806143E-01        0.000000
-                                     212       0.2806143E-01        0.000000
-                                     213       0.2806143E-01        0.000000
-                                     214       0.2806143E-01        0.000000
-                                     215       0.2806143E-01        0.000000
-                                     216       0.2806143E-01        0.000000
-                                     217       0.2806143E-01        0.000000
-                                     218       0.2806143E-01        0.000000
-                                     219       0.2806143E-01        0.000000
-                                     220       0.2806143E-01        0.000000
-                                     221       0.2806143E-01        0.000000
-                                     222       0.2806143E-01        0.000000
-                                     223       0.2806143E-01        0.000000
-                                     224       0.2806143E-01        0.000000
-                                     225       0.2806143E-01        0.000000
-                                     226       0.2806143E-01        0.000000
-                                     227       0.2806143E-01        0.000000
-                                     228       0.2806143E-01        0.000000
-                                     229       0.2806143E-01        0.000000
-                                     230       0.2806143E-01        0.000000
-                                     231       0.2806143E-01        0.000000
-                                     232       0.2806143E-01        0.000000
-                                     233       0.2806143E-01        0.000000
-                                     234       0.2806143E-01        0.000000
-                                     235       0.2806143E-01        0.000000
-                                     236       0.2806143E-01        0.000000
-                                     237       0.2806143E-01        0.000000
-                                     238       0.2806143E-01        0.000000
-                                     239       0.2806143E-01        0.000000
-                                     240       0.2806143E-01        0.000000
-                                     241       0.2806143E-01        0.000000
-                                     242       0.2806143E-01        0.000000
-                                     243       0.2806143E-01        0.000000
-                                     244       0.2806143E-01        0.000000
-                                     245       0.2806143E-01        0.000000
-                                     246       0.2806143E-01        0.000000
-                                     247       0.2806143E-01        0.000000
-                                     248       0.2806143E-01        0.000000
-                                     249       0.2806143E-01        0.000000
-                                     250       0.2806143E-01        0.000000
-                                     251       0.2806143E-01        0.000000
-                                     252       0.2806143E-01        0.000000
-                                     253       0.2806143E-01        0.000000
-                                     254       0.2806143E-01        0.000000
-                                     255       0.2806143E-01        0.000000
-                                     256        0.000000           -17.32500
-                                     257        0.000000           -17.32500
-                                     258        0.000000           -14.17500
-                                     259        0.000000           -14.17500
+                                     OBJ        40.50000           -1.000000
+                                       2        0.000000           -6.525000
+                                       3        0.000000           -6.525000
+                                       4        0.000000           -10.80000
+                                       5        0.000000           -10.80000
+                                       6        0.000000           -4.950000
+                                       7        0.000000           -4.950000
+                                       8        0.000000           -5.962500
+                                       9        0.000000           -5.962500
+                                      10        0.000000           -9.675000
+                                      11        0.000000           -9.675000
+                                      12        0.000000           -2.587500
+                                      13        0.000000           -2.587500
+                                      14        0.000000           -6.525000
+                                      15        0.000000           -6.525000
+                                      16        0.000000           -10.80000
+                                      17        0.000000           -10.80000
+                                      18        0.000000           -4.950000
+                                      19        0.000000           -4.950000
+                                      20        0.000000           -5.962500
+                                      21        0.000000           -5.962500
+                                      22        0.000000           -9.675000
+                                      23        0.000000           -9.675000
+                                      24        0.000000           -2.587500
+                                      25        0.000000           -2.587500
+                                      26        0.000000           -6.525000
+                                      27        0.000000           -6.525000
+                                      28        0.000000           -10.80000
+                                      29        0.000000           -10.80000
+                                      30        0.000000           -4.950000
+                                      31        0.000000           -4.950000
+                                      32        0.000000           -5.962500
+                                      33        0.000000           -5.962500
+                                      34        0.000000           -9.675000
+                                      35        0.000000           -9.675000
+                                      36        0.000000           -2.587500
+                                      37        0.000000           -2.587500
+                                      38        0.000000           -6.525000
+                                      39        0.000000           -6.525000
+                                      40        0.000000           -10.80000
+                                      41        0.000000           -10.80000
+                                      42        0.000000           -4.950000
+                                      43        0.000000           -4.950000
+                                      44        0.000000           -5.962500
+                                      45        0.000000           -5.962500
+                                      46        0.000000           -9.675000
+                                      47        0.000000           -9.675000
+                                      48        0.000000           -2.587500
+                                      49        0.000000           -2.587500
+                                      50        0.000000           -6.525000
+                                      51        0.000000           -6.525000
+                                      52        0.000000           -10.80000
+                                      53        0.000000           -10.80000
+                                      54        0.000000           -4.950000
+                                      55        0.000000           -4.950000
+                                      56        0.000000           -5.962500
+                                      57        0.000000           -5.962500
+                                      58        0.000000           -9.675000
+                                      59        0.000000           -9.675000
+                                      60        0.000000           -2.587500
+                                      61        0.000000           -2.587500
+                                      62        0.000000           -6.525000
+                                      63        0.000000           -6.525000
+                                      64        0.000000           -10.80000
+                                      65        0.000000           -10.80000
+                                      66        0.000000           -4.950000
+                                      67        0.000000           -4.950000
+                                      68        0.000000           -5.962500
+                                      69        0.000000           -5.962500
+                                      70        0.000000           -9.675000
+                                      71        0.000000           -9.675000
+                                      72        0.000000           -2.587500
+                                      73        0.000000           -2.587500
+                                      74        0.000000           -6.525000
+                                      75        0.000000           -6.525000
+                                      76        0.000000           -10.80000
+                                      77        0.000000           -10.80000
+                                      78        0.000000           -4.950000
+                                      79        0.000000           -4.950000
+                                      80        0.000000           -5.962500
+                                      81        0.000000           -5.962500
+                                      82        0.000000           -9.675000
+                                      83        0.000000           -9.675000
+                                      84        0.000000           -2.587500
+                                      85        0.000000           -2.587500
+                                      86        0.000000           -6.525000
+                                      87        0.000000           -6.525000
+                                      88        0.000000           -10.80000
+                                      89        0.000000           -10.80000
+                                      90        0.000000           -4.950000
+                                      91        0.000000           -4.950000
+                                      92        0.000000           -5.962500
+                                      93        0.000000           -5.962500
+                                      94        0.000000           -9.675000
+                                      95        0.000000           -9.675000
+                                      96        0.000000           -2.587500
+                                      97        0.000000           -2.587500
+                                      98        40.50000            0.000000
+                                      99        40.50000            0.000000
+                                     100        40.50000            0.000000
+                                     101        40.50000            0.000000
+                                     102        40.50000            0.000000
+                                     103        40.50000            0.000000
+                                     104        40.50000            0.000000
+                                     105        0.000000           -1.000000
+                                     106        40.50000            0.000000
+                                     107        40.50000            0.000000
+                                     108        40.50000            0.000000
+                                     109        40.50000            0.000000
+                                     110        40.50000            0.000000
+                                     111        40.50000            0.000000
+                                     112       0.2171222E-01        0.000000
+                                     113       0.2171222E-01        0.000000
+                                     114       0.2171222E-01        0.000000
+                                     115       0.2171222E-01        0.000000
+                                     116       0.2171222E-01        0.000000
+                                     117       0.2171222E-01        0.000000
+                                     118       0.2171222E-01        0.000000
+                                     119       0.2171222E-01        0.000000
+                                     120       0.2171222E-01        0.000000
+                                     121       0.2171222E-01        0.000000
+                                     122       0.2171222E-01        0.000000
+                                     123       0.2171222E-01        0.000000
+                                     124       0.2171222E-01        0.000000
+                                     125       0.2171222E-01        0.000000
+                                     126       0.2171222E-01        0.000000
+                                     127       0.2171222E-01        0.000000
+                                     128       0.2171222E-01        0.000000
+                                     129       0.2171222E-01        0.000000
+                                     130       0.2171222E-01        0.000000
+                                     131       0.2171222E-01        0.000000
+                                     132       0.2171222E-01        0.000000
+                                     133       0.2171222E-01        0.000000
+                                     134       0.2171222E-01        0.000000
+                                     135       0.2171222E-01        0.000000
+                                     136       0.2171222E-01        0.000000
+                                     137       0.2171222E-01        0.000000
+                                     138       0.2171222E-01        0.000000
+                                     139       0.2171222E-01        0.000000
+                                     140       0.2171222E-01        0.000000
+                                     141       0.2171222E-01        0.000000
+                                     142       0.2171222E-01        0.000000
+                                     143       0.2171222E-01        0.000000
+                                     144       0.2171222E-01        0.000000
+                                     145       0.2171222E-01        0.000000
+                                     146       0.2171222E-01        0.000000
+                                     147       0.2171222E-01        0.000000
+                                     148       0.2171222E-01        0.000000
+                                     149       0.2171222E-01        0.000000
+                                     150       0.2171222E-01        0.000000
+                                     151       0.2171222E-01        0.000000
+                                     152       0.2171222E-01        0.000000
+                                     153       0.2171222E-01        0.000000
+                                     154       0.2171222E-01        0.000000
+                                     155       0.2171222E-01        0.000000
+                                     156       0.2171222E-01        0.000000
+                                     157       0.2171222E-01        0.000000
+                                     158       0.2171222E-01        0.000000
+                                     159       0.2171222E-01        0.000000
+                                     160       0.2171222E-01        0.000000
+                                     161       0.2171222E-01        0.000000
+                                     162       0.2171222E-01        0.000000
+                                     163       0.2171222E-01        0.000000
+                                     164       0.2171222E-01        0.000000
+                                     165       0.2171222E-01        0.000000
+                                     166       0.2171222E-01        0.000000
+                                     167       0.2171222E-01        0.000000
+                                     168       0.2171222E-01        0.000000
+                                     169       0.2171222E-01        0.000000
+                                     170       0.2171222E-01        0.000000
+                                     171       0.2171222E-01        0.000000
+                                     172       0.2171222E-01        0.000000
+                                     173       0.2171222E-01        0.000000
+                                     174       0.2171222E-01        0.000000
+                                     175       0.2171222E-01        0.000000
+                                     176       0.2171222E-01        0.000000
+                                     177       0.2171222E-01        0.000000
+                                     178       0.2171222E-01        0.000000
+                                     179       0.2171222E-01        0.000000
+                                     180       0.2171222E-01        0.000000
+                                     181       0.2171222E-01        0.000000
+                                     182       0.2171222E-01        0.000000
+                                     183       0.2171222E-01        0.000000
+                                     184       0.2171222E-01        0.000000
+                                     185       0.2171222E-01        0.000000
+                                     186       0.2171222E-01        0.000000
+                                     187       0.2171222E-01        0.000000
+                                     188       0.2171222E-01        0.000000
+                                     189       0.2171222E-01        0.000000
+                                     190       0.2171222E-01        0.000000
+                                     191       0.2171222E-01        0.000000
+                                     192       0.2171222E-01        0.000000
+                                     193       0.2171222E-01        0.000000
+                                     194       0.2171222E-01        0.000000
+                                     195       0.2171222E-01        0.000000
+                                     196       0.2171222E-01        0.000000
+                                     197       0.2171222E-01        0.000000
+                                     198       0.2171222E-01        0.000000
+                                     199       0.2171222E-01        0.000000
+                                     200       0.2171222E-01        0.000000
+                                     201       0.2171222E-01        0.000000
+                                     202       0.2171222E-01        0.000000
+                                     203       0.2171222E-01        0.000000
+                                     204       0.2171222E-01        0.000000
+                                     205       0.2171222E-01        0.000000
+                                     206       0.2171222E-01        0.000000
+                                     207       0.2171222E-01        0.000000
+                                     208       0.2171222E-01        0.000000
+                                     209       0.2171222E-01        0.000000
+                                     210       0.2171222E-01        0.000000
+                                     211       0.2171222E-01        0.000000
+                                     212       0.2171222E-01        0.000000
+                                     213       0.2171222E-01        0.000000
+                                     214       0.2171222E-01        0.000000
+                                     215       0.2171222E-01        0.000000
+                                     216       0.2171222E-01        0.000000
+                                     217       0.2171222E-01        0.000000
+                                     218       0.2171222E-01        0.000000
+                                     219       0.2171222E-01        0.000000
+                                     220       0.2171222E-01        0.000000
+                                     221       0.2171222E-01        0.000000
+                                     222       0.2171222E-01        0.000000
+                                     223       0.2171222E-01        0.000000
+                                     224       0.2171222E-01        0.000000
+                                     225       0.2171222E-01        0.000000
+                                     226       0.2171222E-01        0.000000
+                                     227       0.2171222E-01        0.000000
+                                     228       0.2171222E-01        0.000000
+                                     229       0.2171222E-01        0.000000
+                                     230       0.2171222E-01        0.000000
+                                     231       0.2171222E-01        0.000000
+                                     232       0.2171222E-01        0.000000
+                                     233       0.2171222E-01        0.000000
+                                     234       0.2171222E-01        0.000000
+                                     235       0.2171222E-01        0.000000
+                                     236       0.2171222E-01        0.000000
+                                     237       0.2171222E-01        0.000000
+                                     238       0.2171222E-01        0.000000
+                                     239       0.2171222E-01        0.000000
+                                     240       0.2171222E-01        0.000000
+                                     241       0.2171222E-01        0.000000
+                                     242       0.2171222E-01        0.000000
+                                     243       0.2171222E-01        0.000000
+                                     244       0.2171222E-01        0.000000
+                                     245       0.2171222E-01        0.000000
+                                     246       0.2171222E-01        0.000000
+                                     247       0.2171222E-01        0.000000
+                                     248       0.2171222E-01        0.000000
+                                     249       0.2171222E-01        0.000000
+                                     250       0.2171222E-01        0.000000
+                                     251       0.2171222E-01        0.000000
+                                     252       0.2171222E-01        0.000000
+                                     253       0.2171222E-01        0.000000
+                                     254       0.2171222E-01        0.000000
+                                     255       0.2171222E-01        0.000000
+                                     256        0.000000           -22.27500
+                                     257        0.000000           -22.27500
+                                     258        0.000000           -18.22500
+                                     259        0.000000           -18.22500
  
 :  QUIT
