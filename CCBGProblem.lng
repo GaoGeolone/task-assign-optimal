@@ -7,9 +7,9 @@ MODEL:
 SETS:
   cu /1..8/;
   lk /1..14/;
-  f /1..60/;
-  p /1..60/;
-  e /1..20/;
+  f /1..42/;
+  p /1..42/;
+  e /1..14/;
 ! Make all the vectors, column vectors;
   lxcxc( lk, cu, cu):  TENSOR;
   fxf(f, f): OMEGA,WORKLOAD,DELAYCONSTRAINT,FLUXFORFUNCPAIR;
@@ -20,7 +20,7 @@ SETS:
   cuxcu(cu, cu): DELAYFORCU;
 ! objective function;
   cuxf(cu, f): Xp; ! Function Task assignment matrix;
-  cuxe(cu, e): Xe; ! Entity Task assignment matrix;
+  ! Not adopted;
   exf(e, f): OBJECTCONSTRAINT;
 ENDSETS
 
@@ -66,16 +66,16 @@ ENDCALC
 
 [OBJ] MIN = MaxRatio;
 ! Entity Task assignment Mode: Xp Determined by Xe;
-@FOR(cuxf(ci,fj):Xp(ci,fj)=@SUM(ev(ek):Xe(ci,ek)*OBJECTCONSTRAINT(ek,fj)));
+! Not adopted;
 
 ! Workload of each Transport node >=0;
   ! Frobenius inner product x2,3;
-@FOR(lv(k):MaxRatio >= @SUM(cuxcu(i,j):TENSOR(k,i,j)*@SUM(fxf(fi,fj):Xp(i,fi)*FREQUENCY(fi)*FLUXFORFUNCPAIR(fi,fj)*Xp(j,fj)))/BANDWIDTH(k))  ; 
+! Not adopted;
 !@FOR(lv(k):MaxRatio >=
     @SUM(cuxcu(i,j):
         TENSOR(k,i,j)*@SUM(fxf(fi,fj):Xp(i,fi)*FREQUENCY(fi)*FLUXFORFUNCPAIR(fi,fj)*Xp(j,fj)))/BANDWIDTH(k))  ;  !update workload of each Transport node;
 ! Worklad of each Compute Unit >= 0;
-! Not adopted;
+@FOR(cuv(cui):MaxRatio >=@SUM(fv(lfj):Xp(cui,lfj)*WORKLOAD(lfj,lfj))/SPEED(cui));
 !@FOR(cuv(cui):MaxRatio >=
     @SUM(fv(lfj):Xp(cui,lfj)*WORKLOAD(lfj,lfj))/SPEED(cui));
 ! The delay of each pair of functions should be less than the constraint;
@@ -83,8 +83,8 @@ ENDCALC
       @SUM(cuxcu(dcui,dcuj):Xp(dcui,dfi)*Xp(dcuj,dfj)*@SUM(lv(k):TENSOR(k,dcui,dcuj)/BANDWIDTH(k)))+
       @SUM(cuxcu(dcui,dcuj):Xp(dcui,dfi)*DELAYFORCU(dcui,dcuj)*Xp(dcuj,dfj)));
 ! Function assignment matrix Xp should be binary(bool) and satisfy the constraint that only assigned to one Compute Unit;
-@FOR(ev(k):@SUM(cuv(ci):Xe(ci,k))=1); ! Entity Task assignment matrix;
-@FOR(cuxe(i,j):@BIN(Xe(i,j))); ! Entity Task assignment matrix;
+@FOR(fv(k):@SUM(cuv(ci):Xp(ci,k))=1); ! Function Task assignment matrix;
+@FOR(cuxf(i,j):@BIN(Xp(i,j))); ! Function Task assignment matrix;
 
 
 DATA:

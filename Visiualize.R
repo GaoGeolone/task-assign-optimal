@@ -220,14 +220,19 @@ h1 <- hypergraph_from_edgelist(DrawHyperGraphOfFunctions(dselected_rowsf))
 h2 <- hypergraph_from_edgelist(DrawHyperGraphOfFunctions(dselected_rowsg))
 h3 <- hypergraph_from_edgelist(DrawHyperGraphOfFunctions(dselected_rowsl))
 #h2 <- hypergraph.add.edges(h,list(c('e0-f0','e0-g0','e0-l0'),c('e1-f0','e1-g0','e1-l0'),c('e2-f1','e2-g1','e2-l0'),c('e3-f1','e3-g1','e3-l0')))
+layout_fr <- layout_with_graphopt(hypergraph2graph(h0),mass = 5,spring.length = 15,spring.constant=0.01)
 plot(h0, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.color="black",
-     edge_colors='red')
+     edge_colors='red', vertex.label.cex=1.5, vertex.label.dist=-3, vertex.size=20, margin=0.0025,layout=layout_fr)
+layout_fr <- layout_with_graphopt(hypergraph2graph(h1),mass = 15,spring.length = 15,spring.constant=0.01)
 plot(h1, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.color="black",
-     edge_colors='red')
+     edge_colors='red', vertex.label.cex=1.5, vertex.label.dist=-3, vertex.size=20, margin=0.0025,layout=layout_fr)
+layout_fr <- layout_with_graphopt(hypergraph2graph(h2),mass = 5,spring.length = 15,spring.constant=0.01)
 plot(h2, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.color="black",
-     edge_colors='red')
+     edge_colors='red', vertex.label.cex=1.5, vertex.label.dist=-3, vertex.size=20, margin=0.0025,layout=layout_fr)
+layout_fr <- layout_with_graphopt(hypergraph2graph(h3),mass = 5,spring.length = 15,spring.constant=0.01)
 plot(h3, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.color="black",
-     edge_colors='red')
+     edge_colors='red', vertex.label.cex=1.5, vertex.label.dist=-3, vertex.size=20, margin=0.0025,layout=layout_fr)
+
 #
 # Discussion subsec1
 setwd('g:/15-GEngine/advanced-architecture-scheduler/OptimizerAnalyze')
@@ -344,14 +349,18 @@ h1 <- hypergraph_from_edgelist(DrawHyperGraphOfFunctions(dselected_rowsf))
 h2 <- hypergraph_from_edgelist(DrawHyperGraphOfFunctions(dselected_rowsg))
 h3 <- hypergraph_from_edgelist(DrawHyperGraphOfFunctions(dselected_rowsl))
 #h2 <- hypergraph.add.edges(h,list(c('e0-f0','e0-g0','e0-l0'),c('e1-f0','e1-g0','e1-l0'),c('e2-f1','e2-g1','e2-l0'),c('e3-f1','e3-g1','e3-l0')))
+layout_fr <- layout_with_graphopt(hypergraph2graph(h0),mass = 15,spring.length = 15,spring.constant=0.01)
 plot(h0, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.color="black",
-     edge_colors='red')
+     edge_colors='red', vertex.label.cex=1.5, vertex.label.dist=-3, vertex.size=20, margin=0.0025,layout=layout_fr)
+layout_fr <- layout_with_graphopt(hypergraph2graph(h1),mass = 15,spring.length = 15,spring.constant=0.01)
 plot(h1, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.color="black",
-     edge_colors='red')
+     edge_colors='red', vertex.label.cex=1.5, vertex.label.dist=-3, vertex.size=20, margin=0.0025,layout=layout_fr)
+layout_fr <- layout_with_graphopt(hypergraph2graph(h2),mass = 5,spring.length = 15,spring.constant=0.01)
 plot(h2, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.color="black",
-     edge_colors='red')
+     edge_colors='red', vertex.label.cex=1.5, vertex.label.dist=-3, vertex.size=20, margin=0.0025,layout=layout_fr)
+layout_fr <- layout_with_graphopt(hypergraph2graph(h3),mass = 5,spring.length = 15,spring.constant=0.01)
 plot(h3, vertex.color="lightblue", vertex.frame.color="darkblue", vertex.label.color="black",
-     edge_colors='red')
+     edge_colors='red', vertex.label.cex=1.5, vertex.label.dist=-3, vertex.size=20, margin=0.0025,layout=layout_fr)
 
 
 # 显著性检验定义自定义函数
@@ -382,3 +391,69 @@ print(result3)
 print(result4)
 print(result5)
 print(result6)
+
+
+# Dispose of N data
+setwd('g:/15-GEngine/advanced-architecture-scheduler/OptimizerAnalyze')
+df<-read.csv('dataN.csv')
+#da_filter <- df[df$Xp != "[[1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+# [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+# [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+# [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+# [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+# [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+# [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+# [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]]" ,] #因为规模变化，没有办法滤除
+da_filter <- df[df$obj < 6000,]
+data_n0 <- da_filter %>%
+  group_by(n0,Type) %>%
+  summarise(
+    median = median(obj),  # 中位数
+    q1 = quantile(obj, 0.25),  # 下四分位数
+    q3 = quantile(obj, 0.75),  # 上四分位数
+    upper = min(q3, max(obj)),  # 上边缘
+    lower = max(q1, min(obj))  # 下边缘
+  )
+data_n1 <- da_filter %>%
+  group_by(n1,Type) %>%
+  summarise(
+    median = median(obj),  # 中位数
+    q1 = quantile(obj, 0.25),  # 下四分位数
+    q3 = quantile(obj, 0.75),  # 上四分位数
+    upper = min(q3, max(obj)),  # 上边缘
+    lower = max(q1, min(obj))  # 下边缘
+  )
+# Represent it
+P1 <- data_n0 %>%
+  ggplot( aes(x=n0, y=median, group=Type, color=Type)) +
+  geom_line() +
+  #scale_color_viridis(discrete = TRUE) +
+  #ggtitle("Performance Comparison of Different Scheduling Mechanisms") +
+  #theme_ipsum() +
+  scale_y_continuous(limits = c(0, 1300)) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill=Type), alpha = 0.255)+
+  ylab("Minmax Workload")+
+  xlab(expression(paste("Frequency of function ",f[0]," as ", omega[0])))+
+  scale_fill_discrete_qualitative(palette = "Dark 3")+
+  theme(
+    plot.title = element_text(hjust = 0.5),  # 设置标题居中
+    axis.title.y = element_text(hjust = 0.5), # 设置y轴标签居中
+    axis.title.x = element_text(hjust = 0.5)  # 如果需要也可以设置x轴标签居中
+  )#+ theme(legend.position = "none")
+P2 <- data_n1 %>%
+  ggplot( aes(x=n1, y=median, group=Type, color=Type)) +
+  geom_line() +
+  #scale_color_viridis(discrete = TRUE) +
+  #ggtitle("Performance Comparison of Different Scheduling Mechanisms") +
+  #theme_ipsum() +
+  #scale_y_continuous(limits = c(0, 2300)) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill=Type), alpha = 0.255)+
+  ylab("Minmax Workload")+
+  xlab(expression(paste("Frequency of function ",g[0]," as ", omega[1])))+
+  scale_fill_discrete_qualitative(palette = "Dark 3")+
+  theme(
+    plot.title = element_text(hjust = 0.5),  # 设置标题居中
+    axis.title.y = element_text(hjust = 0.5), # 设置y轴标签居中
+    axis.title.x = element_text(hjust = 0.5)  # 如果需要也可以设置x轴标签居中
+  )#+ theme(legend.position = "none")
+P1

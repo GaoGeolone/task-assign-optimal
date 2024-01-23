@@ -534,8 +534,8 @@ with open('dataN.csv', 'w', newline='') as csvfile:
             print(FedCoAssign)
             Xe = InitXe(8,np.sum(N))
             Xp = np.dot(Xe,FedCoAssign)
-            ld0 = 300
-            ld1 = 100
+            ld0 = 1000
+            ld1 = 500
             w0 = 45
             w1 = 45
             w2 = 45
@@ -543,7 +543,7 @@ with open('dataN.csv', 'w', newline='') as csvfile:
             w4 = 45
             ld2 = 200
             ld3 =200
-            ld4 = 100
+            ld4 = 500
             # for w2 in [1,5,10,15,20,25,30,35]:
                 # for w3 in [1,5,10,15,20,25,30,35]:
             for Type in ['FunAssigned','EntityAssigned','FOnlyCU','FOnlyLK','EOnlyCU','EOnlyLK','Random']:
